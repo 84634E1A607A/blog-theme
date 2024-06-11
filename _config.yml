@@ -49,7 +49,7 @@ toc: true
 # Use copyright infomation
 copyright:
   enable: true
-  # license:
+  license: 'License: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 License</a>'
 
 #Reword button or message(fill your QRCode of any Pay.)
 reward:
