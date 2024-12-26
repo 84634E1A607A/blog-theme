@@ -11,7 +11,7 @@
 {% endif %}
 
 {% if theme.mathjax3 %}
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script>
     MathJax = {
       tex: {
