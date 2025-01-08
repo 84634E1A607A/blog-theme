@@ -72,7 +72,9 @@ reward:
 
 # Comments // Please only switch one on.
 comments:
-  enable: false
+  enable: true
+
+  utterances: true
 
   # disqus:
   # livere_datauid:

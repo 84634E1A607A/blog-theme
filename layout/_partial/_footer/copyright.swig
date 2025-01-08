@@ -14,6 +14,9 @@
             {{ __('theme') }}
             <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
         </span>
+        <span>
+            , <a href="https://github.com/84634E1A607A/blog-theme"> 由 Ajax 本喵魔改 </a>
+        </span>
     </div>
     {% if theme.visit_count %}
     <div class="visit_count">
