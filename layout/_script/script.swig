@@ -1,4 +1,4 @@
-{{ js('https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js') }}
+{{ js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js') }}
 
 {% if theme.lightbox %}
   <script></script>
@@ -41,15 +41,7 @@
 {% if is_post() %}
 <script>
 if (nlviconfig.theme.toc) {
-  setTimeout(function() {
-    if (nlviconfig.theme.scheme === 'balance') {
-      $("#header").addClass("show_toc");
-    } else if (nlviconfig.theme.scheme === 'banderole') {
-      $(".container-inner").addClass("has_toc");
-      $(".post-toc .title").addClass("show");
-      $(".toc-inner").addClass("show");
-    }
-  }, 1000);
+  $(".container-inner").addClass("has_toc");
 }
 </script>
 {% endif %}

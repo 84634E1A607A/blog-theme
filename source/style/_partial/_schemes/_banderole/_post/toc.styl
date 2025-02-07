@@ -4,17 +4,14 @@
   right 0
   bottom 0
   width 200px
-  margin 230px 0
-  margin-right: (yard*2)
+  padding 20vh 0
+  padding-right: (yard*2)
+  background-color: mix($theme-color-main, #fff, 5%)
   line-height: 1.5
   .toc-inner
+    font-size: 0.9em
     padding: 0 (yard*2)
-    opacity: 0
     height: 90%
-    transform-origin: right center
-    transform: rotateY(70deg)
-    transition-sign()
-    transition-delay: 100ms
     overflow: auto
     &::-webkit-scrollbar
       width 1px
@@ -29,17 +26,18 @@
     word-break: auto-phrase
     &:before
       content: '\26ac'
-      font-weight: bold
       color: $theme-color-main
       margin-right: (yard/2)
     &.active
-      @extends .iconfont
+      font-size: 1em
       &:before
+        font-family: iconfont
+        font-size: 0.8em
         content: '\e7eb'
         color: $theme-color-main
       .toc-text
-        padding: 0 (yard/2)
-        font-weight: bold
+        padding: 0 0.3em
+        color: $theme-color-main
   .toc
     margin: 0
     padding: 0
@@ -47,15 +45,13 @@
     margin: 0
     padding: 0
   .toc-level-2
-    margin-bottom: (yard*2) !important
-  .title
+    margin-bottom: 0.5em !important
+  .toc-title
     position relative
     text-align: center
-    font-weight: bold
     margin: yard 0
-    cursor: pointer
+    cursor: default
     padding: (yard/2) 0
-    opacity: 0.5
     &:after
       content: ''
       position: absolute
@@ -65,11 +61,9 @@
       height: 1px
       background-color $theme-color-main
       transition-sign()
-    &.show
-      opacity: 1
-      &:after
-        left: 30%
-        right: 30%
+    &:after
+      left: 30%
+      right: 30%
   +mobile()
     display none
   +tablet()
