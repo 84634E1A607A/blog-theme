@@ -9,6 +9,12 @@ body
     width: 100%
     padding-top: 100px
     transition-sign()
+    padding-left: yard
+    padding-right: 200px
+    +tablet()
+      padding: 0
+      padding-right: 0
+      padding-left: 0
     +mobile()
       margin-top: 72px
     &.under
@@ -16,11 +22,6 @@ body
       transform: scale(0.95)
       transform-origin: top
       filter: blur(16px)
-    &.has_toc
-      padding-left: yard
-      padding-right: 200px
-      +tablet()
-        padding: 0
 
 .main
   max-width: max-width
