@@ -15,7 +15,9 @@
 {% if config.subtitle %}
   <meta name="subtitle" content="{{ config.subtitle }}">
 {% endif %}
-{% if config.description %}
+{% if page.description %}
+  <meta name="description" content="{{ page.description }}">
+{% elif config.description %}
   <meta name="description" content="{{ config.description }}">
 {% endif %}
 {% if config.keywords %}

@@ -5,9 +5,9 @@
         <div class="header-menu-line"></div>
       </div>
     </div>
-    <h1 class="mobile-header-title">
+    <h2 class="mobile-header-title">
       <a href="/">{{config.title}}</a>
-    </h1>
+    </h2>
     <div class="mobile-header-item"></div>
   </div>
   <div class="mobile-header-body">
