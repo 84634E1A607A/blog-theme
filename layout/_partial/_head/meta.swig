@@ -27,5 +27,9 @@
   <meta name="keywords" content="{% for tag in page.tags %}{{ tag.name }}, {% endfor %}nlvi" />
 {% endif %}
 {% if config.canonical %}
-  <link rel="canonical" href="{{ page.permalink }}" />
+  {% if page.permalink %}
+    <link rel="canonical" href="{{ page.permalink }}" />
+  {% else %}
+    <link rel="canonical" href="{{ config.url + "/" + page.path }}" />
+  {% endif %}
 {% endif %}
