@@ -26,3 +26,6 @@
 {% if page.tags and page.tags.length %}
   <meta name="keywords" content="{% for tag in page.tags %}{{ tag.name }}, {% endfor %}nlvi" />
 {% endif %}
+{% if config.canonical %}
+  <link rel="canonical" href="{{ page.permalink }}" />
+{% endif %}
