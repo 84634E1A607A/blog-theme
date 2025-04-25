@@ -29,7 +29,7 @@ class Base {
             if (_this.theme.lazy) {
               imgHead = `<img data-src="${this.src}" class="lazyload"`
             }
-            $(this).replaceWith(`<a href="${this.src}" data-title="${this.alt}" data-lightbox="group">${imgHead} alt="${this.alt}"></a>`)
+            $(this).replaceWith(`<a href="${this.src}" class="${this.className}" data-title="${this.alt}" data-lightbox="group">${imgHead} alt="${this.alt}"></a>`)
           })
         })
       },
