@@ -1,5 +1,5 @@
 {% if theme.comments.utterances %}
-<div id="utteraces-light">
+<div id="utterances-light">
 <script src="https://utteranc.es/client.js"
         repo="84634E1A607A/Blog-Comments"
         issue-term="pathname"
