@@ -25,7 +25,7 @@ class Base {
         $('.post-content').each(function () {
           $(this).find('img').each(function () {
             $(this).parent('p').css('text-align', 'center')
-            let imgHead = `<img src="${this.src}"`
+            let imgHead = `<img src="${this.src}" class="${this.className}"`
             if (_this.theme.lazy) {
               imgHead = `<img data-src="${this.src}" class="lazyload"`
             }
