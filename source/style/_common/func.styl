@@ -33,11 +33,23 @@ transition-sign($sign = all)
 headerStyle()
   if hexo-config('scheme') == 'balance'
     if $header-style == 'block'
-      background-color: mix($theme-color-main, #fff, 15%)
+      +theme_light()
+        background-color: mix($theme-color-main, #fff, 15%)
+      +theme_dark()
+        background-color: mix($theme-color-main-dark, #000, 15%)
     else
-      background-color: #fff
-      border-right: 1px solid mix($theme-color-main, #fff)
-      border-image: -webkit-linear-gradient(#fff, mix($theme-color-main, #fff), #fff) 0 10 0 0
+      +theme_light()
+        background-color: #fff
+        border-right: 1px solid mix($theme-color-main, #fff)
+        border-image: -webkit-linear-gradient(#fff, mix($theme-color-main, #fff), #fff) 0 10 0 0
+      
+      +theme_dark()
+        background-color: #101010
+        border-right: 1px solid mix($theme-color-main-dark, #101010)
+        border-image: -webkit-linear-gradient(#101010, mix($theme-color-main-dark, #101010), #101010) 0 10 0 0
   else
     if $header-style == 'block'
-      background-color: mix($theme-color-main, #fff, 15%)
+      +theme_light()
+        background-color: mix($theme-color-main, #fff, 15%)
+      +theme_dark()
+        background-color: mix($theme-color-main-dark, #101010, 20%)

@@ -4,7 +4,10 @@
   z-index: 9
   width: 100%
   padding: (yard*2) 0
-  background-color #fff
+  +theme_light()
+    background-color #fff
+  +theme_dark()
+    background-color #000
   transition-sign(all)
   flex-wrapper(row)
   headerStyle()
@@ -15,7 +18,10 @@
       justify-content: space-between
     width: 100%
     font-size: 16px
-    color: $theme-text-color-sub
+    +theme_light()
+      color: $theme-text-color-sub
+    +theme_dark()
+      color: $theme-text-color-sub-dark
     padding: 0 (yard*5)
   .logo
     flex-wrapper(row)
@@ -69,12 +75,19 @@
         letter-spacing: 1.2px
         transition-sign()
         &:hover
-          text-shadow: 1px 1px 0px #d6d6d6
-          color: $theme-color-link
+          +theme_light()
+            text-shadow: 1px 1px 0px #d6d6d6
+            color: $theme-color-link
+          +theme_dark()
+            text-shadow: 1px 1px 0px #2f2f2f
+            color: $theme-color-link-dark
 
   &.header-scroll
     padding: yard 0
-    box-shadow: -4px -1px 8px mix(#fff, $theme-color-main)
+    +theme_light()
+      box-shadow: -4px -1px 8px mix(#fff, $theme-color-main)
+    +theme_dark()
+      box-shadow: -4px -1px 8px mix(#101010, $theme-color-main-dark)
     &.header-hide
       opacity: 0
     #subtitle

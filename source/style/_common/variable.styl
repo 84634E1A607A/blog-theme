@@ -59,6 +59,19 @@ $color-code-comment = #a1a4aa
 $color-code-attribute = #61aeee
 $color-code-symbol = #cb4b16
 
+$color-code-background-dark = #202020
+$color-code-plain-dark = #e0e0e0
+$color-code-line-dark = #444
+$color-code-keyword-dark = #c678dd
+$color-code-builtIn-dark = #e6c07b
+$color-code-string-dark = #98c379
+$color-code-params-dark = #5799de
+$color-code-number-dark = #d19a66
+$color-code-title-dark = #e06c75
+$color-code-comment-dark = #a1a4aa
+$color-code-attribute-dark = #61aeee
+$color-code-symbol-dark = #cb4b16
+
 // ======== Global ========
 $global-setting = {
   font-size: 16px,
@@ -66,26 +79,13 @@ $global-setting = {
   color: #383838
 }
 
-// ======== Theme ========
-$theme-style = hexo-config("theme-style")
-
-$theme-list = {
-  default: #383838,
-  sakura:  #c3829e,
-  green:   #70bc68,
-  blue:    #5eb0ff,
-  purple:  #596fef,
-  miku:    #39c5bb,
-  snowmiku: #6ed5fd,
-  custom: $custom-theme-style
+$global-setting-dark = {
+  font-size: 16px,
+  background: #101010,
+  color: #f0f0f0
 }
 
-if $theme-style in $theme-list
-  $theme-select = $theme-list[$theme-style]
-else
-  $theme-select = $theme-list['default']
-
-
+// ======== Theme ========
 $theme-text-color-main = #383838
 $theme-text-color-sub = #666
 $theme-text-color-desc = #999
@@ -93,7 +93,19 @@ $theme-text-color-comment = #c0c0c0
 
 $theme-line-color = #f0f0f0
 
-$theme-color-main = $theme-select
+$theme-color-main = #c3829e
 $theme-color-content-background = mix($theme-color-main, #fff, 3%)
 $theme-color-hover = mix($theme-color-main, #fff, 75%)
 $theme-color-link = mix($theme-color-main, #383838, 75%)
+
+$theme-text-color-main-dark = #f0f0f0
+$theme-text-color-sub-dark = #ddd
+$theme-text-color-desc-dark = #bbb
+$theme-text-color-comment-dark = #666
+
+$theme-line-color-dark = #101010
+
+$theme-color-main-dark = #feb0d1
+$theme-color-content-background-dark = mix($theme-color-main-dark, #000, 3%)
+$theme-color-hover-dark = mix($theme-color-main-dark, #000, 75%)
+$theme-color-link-dark = mix($theme-color-main-dark, #ddd, 75%)

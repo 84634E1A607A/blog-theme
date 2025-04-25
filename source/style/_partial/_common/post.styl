@@ -27,20 +27,32 @@
     font-family: $normal-fonts
     a
       text-decoration: none
-      color: $theme-text-color-main
+      +theme_light()
+        color: $theme-text-color-main
+      +theme_dark()
+        color: $theme-text-color-dark
     .post-time
-      color: $theme-text-color-desc
+      +theme_light()
+        color: $theme-text-color-desc
+      +theme_dark()
+        color: $theme-text-color-dark-desc
       letter-spacing: 1px
       margin-left: (yard/4)
       font-size: 14px
       .post-category
         a
-          color: $theme-text-color-desc
+          +theme_light()
+            color: $theme-text-color-desc
+          +theme_dark()
+            color: $theme-text-color-dark-desc
         &:before
           content: ' · '
 
     .post-pin
-      color: $theme-color-main
+      +theme_light()
+        color: $theme-color-main
+      +theme_dark()
+        color: $theme-color-main-dark
 
     .post-title
       position: relative
@@ -54,14 +66,19 @@
         bottom: 0
         width: 24px
         height: 3px
-        background-color: $theme-color-main
-
+        +theme_light()
+          background-color: $theme-color-main
+        +theme_dark()
+          background-color: $theme-color-main-dark
 
   .post-tags
     margin: (yard*1.5) 0
     padding-left: yard
     font-family: $normal-fonts
-    color: $theme-color-hover
+    +theme_light()
+      color: $theme-color-hover
+    +theme_dark()
+      color: $theme-color-hover-dark
     a
       position: relative
       text-decoration: none
@@ -72,7 +89,10 @@
         margin-right: 2px
 
   .post-content
-    color: $theme-text-color-main
+    +theme_light()
+      color: $theme-text-color-main
+    +theme_dark()
+      color: $theme-text-color-dark-main
     font-family: $article-fonts
     padding-bottom: yard
     border-bottom: 1px solid $theme-line-color
@@ -90,22 +110,30 @@
       tr
         font-weight: 500
         &:nth-child(2n)
-          background: rgba($theme-color-main, .06)
+          +theme_light()
+            background: rgba($theme-color-main, .06)
+          +theme_dark()
+            background: rgba($theme-color-main-dark, .06)
       th
       td
         min-width: 100px
         padding: 8px
         word-break: auto-phrase
       thead
-        background-color: #fafafa
+        +theme_light()
+          background-color: #fafafa
+        +theme_dark()
+          background-color: #2a2a2a
       +mobile()
         font-size: 12px
-
 
     .content-link
       a
         position: relative
-        color: $theme-color-link
+        +theme_light()
+          color: $theme-color-link
+        +theme_dark()
+          color: $theme-color-link-dark
         font-size 18px
         text-decoration: none
         &:hover
@@ -117,7 +145,10 @@
           bottom: -(yard/2)
           left: 50%
           right: 50%
-          background-color: $theme-color-main
+          +theme_light()
+            background-color: $theme-color-main
+          +theme_dark()
+            background-color: $theme-color-main-dark
           height: 2px
           transition-sign(all)
         &:hover
@@ -130,7 +161,10 @@
       line-height: line-height
 
     a
-      color: $theme-color-main
+      +theme_light()
+        color: $theme-color-main
+      +theme_dark()
+        color: $theme-color-main-dark
       text-decoration: none
 
     i
@@ -142,8 +176,12 @@
       margin: auto
 
     code
-      background-color: rgba($theme-color-main, .1)
-      color: mix(#000, $theme-color-link)
+      +theme_light()
+        background-color: rgba($theme-color-main, .1)
+        color: mix(#000, $theme-color-link)
+      +theme_dark()
+        background-color: rgba($theme-color-main-dark, .1)
+        color: mix(#fff, $theme-color-link-dark)
       font-family: $code-fonts
       margin: 0 (yard/2)
       padding: 0 (yard/2)
@@ -152,16 +190,24 @@
       position: relative
       margin: yard (yard*2)
       padding: (yard/4) yard
-      background-color: rgba($theme-color-main, .1)
-      border-left: 4px solid $theme-color-main
-      color: mix(#383838, $theme-color-main)
+      +theme_light()
+        background-color: rgba($theme-color-main, .1)
+        border-left: 4px solid $theme-color-main
+        color: mix(#383838, $theme-color-main)
+      +theme_dark()
+        background-color: rgba($theme-color-main-dark, .1)
+        border-left: 4px solid $theme-color-main-dark
+        color: mix(#f0f0f0, $theme-color-main-dark)
       &:before
         content: ''
         position: absolute
         top: 0
         right: 0
         border-width: 0 12px 12px 0
-        border-color: $theme-color-content-background $theme-color-content-background transparent transparent
+        +theme_light()
+          border-color: $theme-color-content-background $theme-color-content-background transparent transparent
+        +theme_dark()
+          border-color: $theme-color-content-background-dark $theme-color-content-background-dark transparent transparent
         background: transparent
         border-style: solid
         width: 0
@@ -174,11 +220,22 @@
     .fold
       .fold-title
         padding: yard yard * 1.5
-        color: $theme-text-color-sub
+        +theme_light()
+          color: $theme-text-color-sub
+          background-color: rgba($theme-color-main, .1)
+        +theme_dark()
+          color: $theme-text-color-sub-dark
+          background-color: rgba($theme-color-main-dark, .1)
 
 #com-switch
-  color: $theme-color-main
+  +theme_light()
+    color: $theme-color-main
+  +theme_dark()
+    color: $theme-color-main-dark
 
 #disqus_thread
   a
-    color: $theme-text-color-main
+    +theme_light()
+      color: $theme-text-color-main
+    +theme_dark()
+      color: $theme-text-color-main-dark

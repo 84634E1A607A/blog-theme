@@ -1,6 +1,9 @@
 .copy-line
     border none
-    border-bottom 2px dashed $theme-color-link
+    +theme_light()
+      border-bottom 2px dashed $theme-color-link
+    +theme_dark()
+      border-bottom 2px dashed $theme-color-link-dark
 .post-copyright
     .copy-author,
     .copy-url,
@@ -11,7 +14,13 @@
         font-weight 300
         font-size 14px
         a
-            color $theme-text-color-main
+            +theme_light()
+              color $theme-text-color-main
+            +theme_dark()
+              color $theme-text-color-main-dark
             text-decoration none
             &:hover
-                color $theme-color-main
+                +theme_light()
+                  color $theme-color-main
+                +theme_dark()
+                  color $theme-color-main-dark

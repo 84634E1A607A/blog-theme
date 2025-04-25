@@ -45,16 +45,28 @@
       max-width: max-width
       margin: 0 auto
       .search-result-item
-        border-bottom: 1px solid $theme-line-color
+        +theme_light()
+          border-bottom: 1px solid $theme-line-color
+        +theme_dark()
+          border-bottom: 1px solid $theme-line-color-dark
         &:last-child
           border-color: transparent
         h2
           font-size 22px
         a
           text-decoration: none
-          color: $theme-color-main
+          +theme_light()
+            color: $theme-color-main
+          +theme_dark()
+            color: $theme-color-main-dark
           transition-sign(color)
           &:hover
-            color: $theme-color-hover
+            +theme_light()
+              color: $theme-color-hover
+            +theme_dark()
+              color: $theme-color-hover-dark
       .search-keyword
-        color: $theme-color-main
+        +theme_light()
+          color: $theme-color-main
+        +theme_dark()
+          color: $theme-color-main-dark

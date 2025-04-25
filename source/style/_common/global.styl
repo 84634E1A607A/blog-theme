@@ -9,28 +9,58 @@
 ::-webkit-scrollbar-track
 ::-webkit-scrollbar-thumb
   border-radius 3px
-  background-color rgba($theme-text-color-comment, .1)
+
+  +theme_light()
+    background-color rgba($theme-text-color-comment, .1)
+  +theme_dark()
+    background-color rgba($theme-text-color-comment-dark, .1)
 
 ::-webkit-scrollbar-thumb
-  background-color rgba($theme-color-main, .5)
+  +theme_light()
+    background-color rgba($theme-color-main, .5)
+  +theme_dark()
+    background-color rgba($theme-color-main-dark, .5)
 
 ::selection
-  background-color rgba($theme-color-main, .2)
+  +theme_light()
+    background-color rgba($theme-color-main, .3)
+  +theme_dark()
+    background-color rgba($theme-color-main-dark, .3)
 
 ::-webkit-selection
-  background-color rgba($theme-color-main, .2)
+  +theme_light()
+    background-color rgba($theme-color-main, .2)
+  +theme_dark()
+    background-color rgba($theme-color-main-dark, .2)
 
 body
   font-family $article-fonts
   -webkit-font-smoothing antialiased
   -webkit-overflow-scrolling touch
-  background-color $global-setting['background']
+
+  +theme_light()
+    background-color $global-setting['background']
+  
+  +theme_light()
+    color $theme-text-color-main
+
+  +theme_dark()
+    background-color $global-setting-dark['background']
+
+  +theme_dark()
+    color $theme-text-color-main-dark
 
 a
   -webkit-tap-highlight-color transparent
   text-decoration: none
-  color: $theme-text-color-main
+  +theme_light()
+    color: $theme-text-color-main
+  +theme_dark()
+    color: $theme-text-color-main-dark
 
 for $k, $v in $heading-list
   {$k}
     font-size $v
+
+input
+  color: inherit

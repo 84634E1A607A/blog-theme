@@ -6,7 +6,10 @@
   width 200px
   padding 20vh 0
   padding-right: (yard*2)
-  background-color: mix($theme-color-main, #fff, 5%)
+  +theme_light()
+    background-color: mix($theme-color-main, #fff, 5%)
+  +theme_dark()
+    background-color: mix($theme-color-main-dark, #101010, 5%)
   line-height: 1.5
   .toc-inner
     font-size: 0.9em
@@ -26,7 +29,10 @@
     word-break: auto-phrase
     &:before
       content: '\26ac'
-      color: $theme-color-main
+      +theme_light()
+        color: $theme-color-main
+      +theme_dark()
+        color: $theme-color-main-dark
       margin-right: (yard/2)
     &.active
       font-size: 1em
@@ -34,10 +40,16 @@
         font-family: iconfont
         font-size: 0.8em
         content: '\e7eb'
-        color: $theme-color-main
+        +theme_light()
+          color: $theme-color-main
+        +theme_dark()
+          color: $theme-color-main-dark
       .toc-text
         padding: 0 0.3em
-        color: $theme-color-main
+        +theme_light()
+          color: $theme-color-main
+        +theme_dark()
+          color: $theme-color-main-dark
   .toc
     margin: 0
     padding: 0
@@ -59,7 +71,10 @@
       right: 50%
       bottom: 0
       height: 1px
-      background-color $theme-color-main
+      +theme_light()
+        background-color $theme-color-main
+      +theme_dark()
+        background-color $theme-color-main-dark
       transition-sign()
     &:after
       left: 30%

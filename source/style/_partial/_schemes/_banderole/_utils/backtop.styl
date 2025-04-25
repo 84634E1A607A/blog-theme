@@ -5,7 +5,10 @@
   position fixed
   bottom (yard*4)
   right @bottom
-  color $theme-color-main
+  +theme_light()
+    color $theme-color-main
+  +theme_dark()
+    color $theme-color-main-dark
   user-select none
   -webkit-user-select none
   cursor pointer

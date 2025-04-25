@@ -14,20 +14,29 @@
 
   .extend
     text-decoration none
-    color $theme-text-color-main
+    +theme_light()
+      color $theme-text-color-main
+    +theme_dark()
+      color $theme-text-color-main-dark
     font-size 18px
 
     &.next
       float right
       transition-sign()
       &:hover
-        color $theme-color-main
+        +theme_light()
+          color $theme-color-main
+        +theme_dark()
+          color $theme-color-main-dark
         transform translateX(4%)
     &.prev
       float left
       transition-sign()
       &:hover
-        color $theme-color-main
+        +theme_light()
+          color $theme-color-main
+        +theme_dark()
+          color $theme-color-main-dark
         transform translateX(-4%)
     +mobile()
       font-size 14px
@@ -40,12 +49,18 @@
     text-align center
   a
     text-decoration none
-    color $theme-text-color-main
+    +theme_light()
+      color $theme-text-color-main
+    +theme_dark()
+      color $theme-text-color-main-dark
     font-size 16px
     +mobile()
       font-size 12px
     &:hover
-      color $theme-color-main
+      +theme_light()
+        color $theme-color-main
+      +theme_dark()
+        color $theme-color-main-dark
 
   &:before
     content ''

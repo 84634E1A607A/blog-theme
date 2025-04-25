@@ -1,11 +1,3 @@
-$bgStyle = hexo-config("mobile-header")
-if $bgStyle == 'light'
-  $backgroundColor = #fff
-  $fontColor = $theme-color-main
-else
-  $backgroundColor = #666
-  $fontColor = #fff
-
 .mobile-header
   display: none
   position: fixed
@@ -18,8 +10,12 @@ else
   .mobile-header-nav
     +flex-wrapper(row)
       justify-content: space-between
-    background-color: $backgroundColor
-    color: $fontColor
+    +theme_light()
+      background-color: mix($theme-color-main, #fff, 15%)
+      color: #000
+    +theme_dark()
+      background-color: mix($theme-color-main-dark, #101010, 20%)
+      color: #fff
     min-height: 48px
     height: 48px
     .mobile-header-item
@@ -47,7 +43,10 @@ else
     align-items: center
   &.header-scroll
     transition-sign()
-    box-shadow: -4px -1px 8px mix(#fff, $theme-color-main)
+    +theme_light()
+      box-shadow: -4px -1px 8px mix(#fff, $theme-color-main)
+    +theme_dark()
+      box-shadow: -4px -1px 8px mix(#101010, $theme-color-main-dark)
 .mobile-header-body
   display: none
   width: 100%
@@ -63,7 +62,10 @@ else
       padding: yard 0
       border-bottom: 1px solid $theme-line-color
       a
-        color: $theme-color-main
+        +theme_light()
+          color: $theme-text-color-main
+        +theme_dark()
+          color: $theme-text-color-main-dark
       &:last-child
         border-bottom-color: transparent
 
@@ -71,7 +73,10 @@ else
   position: relative
   width: 20px
   height: 1px
-  background-color: $theme-color-main
+  +theme_light()
+    background-color: $theme-color-main
+  +theme_dark()
+    background-color: $theme-color-main-dark
   transform-origin: center
   transition-sign(all)
   &:before
@@ -91,6 +96,7 @@ else
     background-color: transparent
     &:before
       transform: rotate(135deg) translate(10%, 80%)
-      border-color: $theme-color-main
-
-
+      +theme_light()
+        border-color: $theme-color-main
+      +theme_dark()
+        border-color: $theme-color-main-dark
