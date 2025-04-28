@@ -48,6 +48,20 @@ if (nlviconfig.theme.toc) {
 
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
+  mermaid.initialize({ startOnLoad: false });
   window.mermaid = mermaid;
+
+  async function renderMermaids() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const activeClass = prefersDark ? 'mermaid-dark' : 'mermaid-light';
+    mermaid.run({
+      querySelector: '.mermaid.' + activeClass,
+    })
+  }
+
+  renderMermaids();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    renderMermaids();
+  });
 </script>
