@@ -3,7 +3,16 @@
   <div class="post-copyright">
     <div class="copy-author">
       <span>{{ __('copyright.author') }} :</span>
+
+      {% if config.email %}
+      <a href='mailto:{{ config.email }}'>
+      {% endif %}
+
       <span>{{ config.author }}</span>
+
+      {% if config.email %}
+      </a>
+      {% endif %}
     </div>
     <div class="copy-url">
       <span>{{ __('copyright.url') }} :</span>

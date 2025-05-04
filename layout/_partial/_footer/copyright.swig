@@ -3,7 +3,15 @@
         <span>&copy;</span>
         <span>{{ theme.since }} ~ {{ date(Date.now(), 'YYYY') }}</span>
         <span>❤</span>
+        {% if config.email %}
+        <a href='mailto:{{ config.email }}'>
+        {% endif %}
+
         <span>{{ config.author }}</span>
+
+        {% if config.email %}
+        </a>
+        {% endif %}
     </div>
     <div class="theme">
         <span>
