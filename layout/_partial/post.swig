@@ -19,6 +19,9 @@
               <span class="post-category"><a href="{{ url_for(category.path) }}">{{ category.name }}</a></span>
             {% endfor %}
           {% endif %}
+          {% if post.updated and (full_date(post.date, 'YYYY-MM-DD') != full_date(post.updated, 'YYYY-MM-DD')) %}
+          <span class="post-updated">更新于 <time>{{ full_date(post.updated, 'YYYY-MM-DD') }}</time></span>
+          {% endif %}
         </div>
       </div>
       <h1 class="post-title syuanpi fadeInRightShort back-2">

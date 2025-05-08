@@ -35,16 +35,28 @@
       +theme_light()
         color: $theme-text-color-desc
       +theme_dark()
-        color: $theme-text-color-dark-desc
+        color: $theme-text-color-desc-dark
       letter-spacing: 1px
       margin-left: (yard/4)
       font-size: 14px
+      .post-time-wrapper
+        display: flex
+        flex-direction: row
+        .post-updated
+          flex: 1
+          justify-self: right
+          text-align: right
+          +theme_light()
+            color: $theme-text-color-desc
+          +theme_dark()
+            color: $theme-text-color-desc-dark
+          
       .post-category
         a
           +theme_light()
             color: $theme-text-color-desc
           +theme_dark()
-            color: $theme-text-color-dark-desc
+            color: $theme-text-color-desc-dark
         &:before
           content: ' · '
 
@@ -92,7 +104,7 @@
     +theme_light()
       color: $theme-text-color-main
     +theme_dark()
-      color: $theme-text-color-dark-main
+      color: $theme-text-color-main-dark
     font-family: $article-fonts
     padding-bottom: yard
     border-bottom: 1px solid $theme-line-color
