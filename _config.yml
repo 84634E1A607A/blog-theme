@@ -9,6 +9,7 @@ menu:
   tags: /tags
   about: /about
   rss: /atom.xml
+  travelling: https://www.travellings.cn/plain.html
 
 # favicon
 favicon: /favicon.ico
@@ -20,7 +21,7 @@ favicon: /favicon.ico
 ## Common
 
 # Navigator Language
-local-nav: false
+local-nav: true
 
 # Mobile-Header
 # light | dark
