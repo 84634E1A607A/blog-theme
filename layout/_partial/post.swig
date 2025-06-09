@@ -29,10 +29,10 @@
           <span class="post-views" id="post-views-{{ post.path }}">观测到 <span id="post-view-count-{{ post.path }}">0</span> 次访问</span>
           <script>
           (() => {
-            var postPath = "{{ post.path }}";
-            var postViewCount = document.getElementById('post-view-count-' + postPath);
-            var postViews = document.getElementById('post-views-' + postPath);
-            var postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator-' + postPath);
+            const postPath = "{{ post.path }}";
+            const postViewCount = document.getElementById('post-view-count-' + postPath);
+            const postViews = document.getElementById('post-views-' + postPath);
+            const postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator-' + postPath);
             fetch('/api/views/' + postPath)
               .then(response => response.json())
               .then(data => {
@@ -93,7 +93,8 @@
   {% if is_post() %}
     <img id="post-view-beacon-{{ post.path }}" src="/api/read/{{post.path}}">
     <script>
-      var beacon = document.getElementById('post-view-beacon-{{ post.path }}');
+    (() => {
+      const beacon = document.getElementById('post-view-beacon-{{ post.path }}');
       beacon.addEventListener('load', function() {
         beacon.style.display = 'none';
       });
@@ -101,6 +102,7 @@
         console.error('Error loading post view beacon for:', '{{ post.path }}');
         beacon.style.display = 'none';
       });
+    })();
     </script>
 
     {% include "pagenum.swig" %}
