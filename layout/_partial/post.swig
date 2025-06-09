@@ -22,21 +22,21 @@
 
           {% if post.updated and (full_date(post.date, 'YYYY-MM-DD') != full_date(post.updated, 'YYYY-MM-DD')) %}
           <span class="post-updated">更新于 <time>{{ full_date(post.updated, 'YYYY-MM-DD') }}</time>
-          <span id="post-updated-views-separator"> | </span>
+          <span id="post-updated-views-separator-{{ post.path }}"> | </span>
           </span>
           {% endif %}
 
-          <span class="post-views" id="post-views">观测到 <span id="post-view-count">0</span> 次访问</span>
+          <span class="post-views" id="post-views-{{ post.path }}">观测到 <span id="post-view-count-{{ post.path }}">0</span> 次访问</span>
           <script>
             var postPath = "{{ post.path }}";
-            var postViewCount = document.getElementById('post-view-count');
-            var postViews = document.getElementById('post-views');
-            var postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator');
+            var postViewCount = document.getElementById('post-view-count-' + postPath);
+            var postViews = document.getElementById('post-views-' + postPath);
+            var postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator-' + postPath);
             fetch('/api/views/' + postPath)
               .then(response => response.json())
               .then(data => {
-                if (data && data.views) {
-                  postViewCount.textContent = data.views;
+                if (typeof data === 'number') {
+                  postViewCount.textContent = data;
                 } else {
                   postViews.style.display = 'none';
                   postUpdatedViewsSeparator.style.display = 'none';
@@ -89,7 +89,18 @@
     {% endif %}
   </article>
   {% if is_post() %}
-    <img src="/api/read/{{post.path}}" onerror="this.style.display='none'">
+    <img id="post-view-beacon-{{ post.path }}" src="/api/read/{{post.path}}">
+    <script>
+      var beacon = document.getElementById('post-view-beacon-{{ post.path }}');
+      beacon.addEventListener('load', function() {
+        beacon.style.display = 'none';
+      });
+      beacon.addEventListener('error', function() {
+        console.error('Error loading post view beacon for:', '{{ post.path }}');
+        beacon.style.display = 'none';
+      });
+    </script>
+
     {% include "pagenum.swig" %}
     {% include "_post/comments.swig" %}
 
