@@ -13,15 +13,41 @@
           {% if not is_post() and post.top %}
             <i class="iconfont icon-pin post-pin"></i>
           {% endif %}
-          <time>{{ full_date(post.date, 'YYYY-MM-DD') }}</time>
+          <time class="post-time-inner">{{ full_date(post.date, 'YYYY-MM-DD') }}</time>
           {% if post.categories and post.categories.length %}
             {% for category in post.categories %}
               <span class="post-category"><a href="{{ url_for(category.path) }}">{{ category.name }}</a></span>
             {% endfor %}
           {% endif %}
+
           {% if post.updated and (full_date(post.date, 'YYYY-MM-DD') != full_date(post.updated, 'YYYY-MM-DD')) %}
-          <span class="post-updated">更新于 <time>{{ full_date(post.updated, 'YYYY-MM-DD') }}</time></span>
+          <span class="post-updated">更新于 <time>{{ full_date(post.updated, 'YYYY-MM-DD') }}</time>
+          <span id="post-updated-views-separator"> | </span>
+          </span>
           {% endif %}
+
+          <span class="post-views" id="post-views">观测到 <span id="post-view-count">0</span> 次访问</span>
+          <script>
+            var postPath = "{{ post.path }}";
+            var postViewCount = document.getElementById('post-view-count');
+            var postViews = document.getElementById('post-views');
+            var postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator');
+            fetch('/api/views/' + postPath)
+              .then(response => response.json())
+              .then(data => {
+                if (data && data.views) {
+                  postViewCount.textContent = data.views;
+                } else {
+                  postViews.style.display = 'none';
+                  postUpdatedViewsSeparator.style.display = 'none';
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching post views:', error);
+                postViews.style.display = 'none';
+                postUpdatedViewsSeparator.style.display = 'none';
+              });
+          </script>
         </div>
       </div>
       <h1 class="post-title syuanpi fadeInRightShort back-2">
@@ -63,6 +89,7 @@
     {% endif %}
   </article>
   {% if is_post() %}
+    <img src="/api/read/{{post.path}}" onerror="this.style.display='none'">
     {% include "pagenum.swig" %}
     {% include "_post/comments.swig" %}
 

@@ -42,14 +42,18 @@
       .post-time-wrapper
         display: flex
         flex-direction: row
-        .post-updated
+        .post-time-inner
           flex: 1
+        .post-updated, .post-views
           justify-self: right
           text-align: right
           +theme_light()
             color: $theme-text-color-desc
           +theme_dark()
             color: $theme-text-color-desc-dark
+        
+        .post-updated
+          margin-right: (yard/2)
           
       .post-category
         a
