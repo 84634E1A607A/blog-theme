@@ -28,6 +28,7 @@
 
           <span class="post-views" id="post-views-{{ post.path }}">观测到 <span id="post-view-count-{{ post.path }}">0</span> 次访问</span>
           <script>
+          (() => {
             var postPath = "{{ post.path }}";
             var postViewCount = document.getElementById('post-view-count-' + postPath);
             var postViews = document.getElementById('post-views-' + postPath);
@@ -47,6 +48,7 @@
                 postViews.style.display = 'none';
                 postUpdatedViewsSeparator.style.display = 'none';
               });
+          })();
           </script>
         </div>
       </div>
