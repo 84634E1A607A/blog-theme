@@ -106,6 +106,30 @@ input
   a
     text-decoration: underline !important
 
+  // Fix code block overflow in print
+  .highlight
+    table
+      overflow-x: visible !important
+
+    pre, .code pre
+      white-space: pre-wrap
+      word-wrap: break-word
+      overflow-wrap: anywhere
+  
+  // Expand folds
+  .fold.collapsed
+    .fold-title
+      display: flex
+    .fold-title:after
+      content: "Expanded for print"
+      text-align: right
+      margin-left: auto
+      font-weight: normal
+      font-style: italic
+      color: $theme-text-color-comment
+    .fold-content
+      max-height: none !important
+
 @page
   margin-top: 0.75in;
   margin-bottom: 0.75in;
