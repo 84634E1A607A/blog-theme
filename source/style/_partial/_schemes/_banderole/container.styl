@@ -36,6 +36,9 @@ body
       padding-left: 0
     +mobile()
       padding-top: 48px
+    @media print
+      padding-right: 0
+      padding-top: 0
 
 .main
   max-width: max-width
@@ -67,3 +70,13 @@ body
     display: none
   +theme_dark()
     display: inherit
+
+// This acts as a print-time fallback
+.mermaid-code
+  font-size: 0.9em
+  line-height: 1.25
+  background: #f0f0f0
+  border: 1px solid #ccc
+  padding: 10px
+  white-space: pre-wrap !important
+  text-align: left !important

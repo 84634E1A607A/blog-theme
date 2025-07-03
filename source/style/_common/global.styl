@@ -76,4 +76,38 @@ input
     border-color mix($theme-color-content-background, #333, 90%) !important
   +theme_dark()
     border-color mix($theme-color-content-background-dark, #ddd, 90%) !important
-    
+
+// Print styles - hide header when printing
+@media print
+  .header,
+  .mobile-header,
+  .post-toc,
+  .backtop,
+  .article-page,
+  #com-switch
+    display: none !important
+
+  // Hide comments sections as it can't load correctly in print
+  #utterances-dark, #utterances-light
+    display: none !important
+
+  // Hide github buttons
+  .footer-wrapper .left
+    display: none !important
+  
+  // Show all light mermaid diagrams in print mode
+  .mermaid-light, .mermaid-dark
+    display: none !important
+
+  // Show fallback content for print
+  .mermaid-print-fallback
+    display: block !important
+
+  a
+    text-decoration: underline !important
+
+@page
+  margin-top: 0.75in;
+  margin-bottom: 0.75in;
+  margin-left: 0.5in;
+  margin-right: 0.5in;

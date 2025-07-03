@@ -4,7 +4,10 @@
       border-bottom 2px dashed $theme-color-link
     +theme_dark()
       border-bottom 2px dashed $theme-color-link-dark
+
 .post-copyright
+    page-break avoid
+
     .copy-author,
     .copy-url,
     .copy-origin,
@@ -12,7 +15,7 @@
         margin (yard) (yard)
         font-family "Open Sans", sans-serif
         font-weight 300
-        font-size 14px
+        font-size 0.875em
         a
             +theme_light()
               color $theme-text-color-main
