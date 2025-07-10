@@ -27,8 +27,11 @@
     margin-top: (yard/2)
   .toc-link
     word-break: auto-phrase
+    transition: transform 1s ease, color 1s ease, translate 1s ease
+    .toc-text
+      transition: color 0.3s ease
     &:before
-      content: '\26ac'
+      content: '\26ac\00a0\00a0'
       +theme_light()
         color: $theme-color-main
       +theme_dark()

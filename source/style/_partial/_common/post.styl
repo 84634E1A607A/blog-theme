@@ -13,8 +13,18 @@
     height: 0
     border: 12px solid transparent
     border-bottom: 12px solid rgba($theme-color-main, 50%)
-    transform-origin: 63% 86%
-    transform: rotate(135deg)
+    transform: rotate(135deg) translate(-5px, -6px)
+    opacity: 0
+    animation: fadeInFromLeft 0.8s forwards
+    animation-timing-function:cubic-bezier(.2,.1,.1,1)
+
+    @keyframes fadeInFromLeft
+      from
+        transform: translateX(-20px) rotate(135deg) translate(-5px, -6px)
+        opacity: 0
+      to
+        transform: translateX(0) rotate(135deg) translate(-5px, -6px)
+        opacity: 1
   &:last-child
   &.is_post
     &:after
