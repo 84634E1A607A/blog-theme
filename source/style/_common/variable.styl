@@ -11,28 +11,14 @@ max-width = 900px
 font-weight = 400
 
 // Normal Font
-$normal-fonts = "WesternQuotes", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif
+$normal-fonts = 'Roboto', "Microsoft YaHei", Arial, sans-serif
 $header-fonts = 'Allura', cursive, serif
 
 // Article Font
-$article-fonts = {
-  default: 'Optima'\, 'PingFang SC'\, 'Roboto'\, 'Noto SansCJK'\, 'Helvetica Neue'\, 'Helvetica'\, "Microsoft YaHei"\, "YaHei-Consolas-Hybrid"\, sans-serif
-  YaHei: STHeiti\, 'Microsoft YaHei'\, "微软雅黑"\, serif
-  Hel: 'Helvetica'\, 'Hiragino Sans GB'\, 'Roboto'\, 'Noto SansCJK'\, 'Heiti TC'\, 'Heiti SC'\, sans-serif
-  Simsun: 'Times New Roman'\, 'Simsun'\, 'STSong'\, '华文宋体'\, sans-serif
-}
-$fonts-style = hexo-config('fonts-style')
-if $fonts-style in $article-fonts
-  $article-fonts = $article-fonts[$fonts-style]
-  if $fonts-style == 'Custom'
-    $article-fonts = $custom-article-font
-else
-  $article-fonts = $article-fonts['default']
+$article-fonts = $normal-fonts
 
 // Code Font
-$code-fonts = jetbrains-mono, monospace, Consolas, Monaco, Menlo, 'Microsoft YaHei', sans-serif
-if hexo-config('code-style') == 'Custom'
-  $code-fonts = $custom-code-font
+$code-fonts = 'JetBrains Mono', monospace
 
 $heading-list = {
   h1: 1.75em
