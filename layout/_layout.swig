@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config.language }}">
+<html lang="{{ config.language }}" prefix="og: http://ogp.me/ns#">
 <head>
   {% include "_partial/head.swig" %}
   <title>{% block title %}{% endblock %}</title>
