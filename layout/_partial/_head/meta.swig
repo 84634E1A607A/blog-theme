@@ -36,6 +36,7 @@
 
 {# Open Graph Protocol #}
 <meta property="og:site_name" content="{{ config.title }}" />
+<meta property="og:logo" content="https://aajax.top/favicon.ico" />
 {% if page.title %}
   <meta property="og:title" content="{{ page.title }}" />
 {% endif %}
