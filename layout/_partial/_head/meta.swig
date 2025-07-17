@@ -33,3 +33,41 @@
     <link rel="canonical" href="{{ config.url + "/" + page.path }}" />
   {% endif %}
 {% endif %}
+
+{# Open Graph Protocol #}
+<meta property="og:site_name" content="{{ config.title }}" />
+{% if page.title %}
+  <meta property="og:title" content="{{ page.title }}" />
+{% endif %}
+{% if page.permalink %}
+  <meta property="og:url" content="{{ page.permalink }}" />
+{% else %}
+  <meta property="og:url" content="{{ config.url + "/" + page.path }}" />
+{% endif %}
+{% if page.description %}
+  <meta property="og:description" content="{{ page.description }}" />
+{% elif config.description %}
+  <meta property="og:description" content="{{ config.description }}" />
+{% endif %}
+{% if is_post() %}
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="{{ page.date.toISOString() }}" />
+  <meta property="article:modified_time" content="{{ page.updated.toISOString() }}" />
+  {% if page.author %}
+    <meta property="article:author" content="{{ page.author }}" />
+  {% elif config.author %}
+    <meta property="article:author" content="{{ config.author }}" />
+  {% endif %}
+  {% if page.tags and page.tags.length %}
+    {% for tag in page.tags %}
+      <meta property="article:tag" content="{{ tag.name }}" />
+    {% endfor %}
+  {% endif %}
+  {% if page.categories and page.categories.length %}
+    {% for category in page.categories %}
+      <meta property="article:section" content="{{ category.name }}" />
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <meta property="og:type" content="website" />
+{% endif %}
