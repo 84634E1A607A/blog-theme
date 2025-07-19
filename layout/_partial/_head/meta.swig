@@ -38,7 +38,14 @@
 <meta property="og:site_name" content="{{ config.title }}" />
 <meta property="og:logo" content="https://aajax.top/favicon.ico" />
 {% if page.ogp_image %}
-  <meta property="og:image" content="{{ page.ogp_image.url }}" />
+  {# If ogp_image.url is a relative link, solve it here #}
+  {% if page.ogp_image.url.startsWith('https://') or page.ogp_image.url.startsWith('http://') %}
+    <meta property="og:image" content="{{ page.ogp_image.url }}" />
+  {% elif page.ogp_image.url.startsWith('/') %}
+    <meta property="og:image" content="{{ config.url + page.ogp_image.url }}" />
+  {% else %}
+    <meta property="og:image" content="{{ page.permalink + page.ogp_image.url }}" />
+  {% endif %}
   <meta property="og:image:width" content="{{ page.ogp_image.width }}" />
   <meta property="og:image:height" content="{{ page.ogp_image.height }}" />
   <meta property="og:image:alt" content="{{ page.ogp_image.alt }}" />
