@@ -49,11 +49,11 @@
   <meta property="og:image:width" content="{{ page.ogp_image.width }}" />
   <meta property="og:image:height" content="{{ page.ogp_image.height }}" />
   <meta property="og:image:alt" content="{{ page.ogp_image.alt }}" />
-{% else %}
-  <meta property="og:image" content="https://aajax.top/favicon.ico" />
-  <meta property="og:image:width" content="256" />
-  <meta property="og:image:height" content="256" />
-  <meta property="og:image:alt" content="Favicon of Ajax's Blog" />
+{% elif config.ogp_image %}
+  <meta property="og:image" content="{{ config.ogp_image.url }}" />
+  <meta property="og:image:width" content="{{ config.ogp_image.width }}" />
+  <meta property="og:image:height" content="{{ config.ogp_image.height }}" />
+  <meta property="og:image:alt" content="{{ config.ogp_image.alt }}" />
 {% endif %}
 {% if page.title %}
   <meta property="og:title" content="{{ page.title }}" />
