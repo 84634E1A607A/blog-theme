@@ -133,7 +133,7 @@ mathjax3: true
 lightbox: true
 
 # lazyload
-lazyload: false
+lazyload: true
 
 # animate (Powered by Syuanpi on https://colmugx.github.io/Syuanpi.css)
 animate: true

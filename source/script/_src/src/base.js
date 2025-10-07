@@ -25,24 +25,40 @@ class Base {
         $('.post-content').each(function () {
           $(this).find('img').each(function () {
             $(this).parent('p').css('text-align', 'center')
-            let imgHead = `<img src="${this.src}" class="${this.className}"`
+            
+            const $img = $(this)
+            const src = this.src
+            const alt = this.alt || ''
+            const className = this.className || ''
+            
+            // Handle lazy loading by modifying the existing img
             if (_this.theme.lazy) {
-              imgHead = `<img data-src="${this.src}" class="lazyload"`
+              $img.attr('data-src', src)
+              $img.removeAttr('src')
+              $img.addClass('lazyload')
             }
-            $(this).replaceWith(`<a href="${this.src}" class="${this.className}" data-title="${this.alt}" data-lightbox="group">${imgHead} alt="${this.alt}"></a>`)
+            
+            // Wrap existing img in lightbox link
+            $img.wrap(
+              $('<a>')
+                .attr('href', src)
+                .attr('data-title', alt)
+                .attr('data-lightbox', 'group')
+                .addClass(className)
+            )
           })
         })
       },
       showComments() {
-        $('#com-switch').on('click', () => {
+        $('#com-switch').on('click', function() {
           if (utils('iss', '#post-comments').display()) {
             $('#post-comments').css('display', 'block').addClass('syuanpi fadeInDown')
-            $(this).removeClass('syuanpi').css('transform', 'rotate(180deg)')
+            $(this).css('transform', 'rotate(180deg)')
           } else {
             $(this).addClass('syuanpi').css('transform', '')
             utils('cls', '#post-comments').opreate('fadeInDown', 'remove')
-            utils('ani', '#post-comments').end('fadeOutUp', function () {
-              $(this).css('display', 'none')
+            utils('ani', '#post-comments').end('fadeOutUp', function (ele) {
+              $(ele).css('display', 'none')
             })
           }
         })

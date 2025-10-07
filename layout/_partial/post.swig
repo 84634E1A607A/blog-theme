@@ -90,6 +90,10 @@
       {% include "_post/copyright.swig" %}
     {% endif %}
   </article>
+  {% if theme.scheme == 'banderole' %}
+    {% include "./_feature/banderole.swig" %}
+  {% endif %}
+  
   {% if is_post() %}
     <img id="post-view-beacon-{{ post.path }}" src="/api/read/{{post.path}}">
     <script>
@@ -107,9 +111,5 @@
 
     {% include "pagenum.swig" %}
     {% include "_post/comments.swig" %}
-
-  {% endif %}
-  {% if theme.scheme == 'banderole' %}
-    {% include "./_feature/banderole.swig" %}
   {% endif %}
 {% endmacro %}

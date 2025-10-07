@@ -5,7 +5,7 @@ import replace from 'rollup-plugin-replace'
 import { uglify } from 'rollup-plugin-uglify'
 import { minify } from 'uglify-es'
 
-export default ['banderole', 'balance'].map(name => ({
+export default ['banderole'].map(name => ({
   input: `src/${name}.js`,
   plugins: [
     babel({
