@@ -3,140 +3,169 @@ import { map, switchMap, filter } from 'rxjs/operators'
 import genSearch from './search'
 
 class Base {
-
   constructor(config) {
     this.config = config
     this.theme = config.theme
     this.scrollArr = []
   }
 
+  animate(selector, animation, callback) {
+    const $el = $(selector)
+    $el.addClass(animation)
+      .one('webkitAnimationEnd AnimationEnd', function () {
+        $el.removeClass(animation)
+        callback && callback()
+      })
+  }
+
   init() {
-    const utils = Base.utils
-    const fns = {
-      smoothScroll() {
-        $('.toc-link').on('click', function () {
+    this.smoothScroll()
+    this.setupPictures()
+    this.showComments()
+    Base.opScroll(this.scrollArr)
+  }
+
+  smoothScroll() {
+    $('.toc-link').on('click', function (e) {
+      e.preventDefault()
+      const href = $.attr(this, 'href')
+      
+      // Handle URL-encoded hrefs (e.g., Chinese characters)
+      try {
+        // Remove the # and decode the ID
+        const targetId = decodeURIComponent(href.substring(1))
+        const target = document.getElementById(targetId)
+        
+        if (target) {
           $('html, body').animate({
-            scrollTop: $($.attr(this, 'href')).offset().top - 200
+            scrollTop: $(target).offset().top - 200
           })
-        })
-      },
-      picPos() {
-        const _this = this
-        $('.post-content').each(function () {
-          $(this).find('img').each(function () {
-            $(this).parent('p').css('text-align', 'center')
-            
-            const $img = $(this)
-            const src = this.src
-            const alt = this.alt || ''
-            const className = this.className || ''
-            
-            // Handle lazy loading by modifying the existing img
-            if (_this.theme.lazy) {
-              $img.attr('data-src', src)
-              $img.removeAttr('src')
-              $img.addClass('lazyload')
-            }
-            
-            // Wrap existing img in lightbox link
-            $img.wrap(
-              $('<a>')
-                .attr('href', src)
-                .attr('data-title', alt)
-                .attr('data-lightbox', 'group')
-                .addClass(className)
-            )
-          })
-        })
-      },
-      showComments() {
-        $('#com-switch').on('click', function() {
-          if (utils('iss', '#post-comments').display()) {
-            $('#post-comments').css('display', 'block').addClass('syuanpi fadeInDown')
-            $(this).css('transform', 'rotate(180deg)')
-          } else {
-            $(this).addClass('syuanpi').css('transform', '')
-            utils('cls', '#post-comments').opreate('fadeInDown', 'remove')
-            utils('ani', '#post-comments').end('fadeOutUp', function (ele) {
-              $(ele).css('display', 'none')
+        }
+      } catch (err) {
+        // Fallback to original behavior for simple hrefs
+        try {
+          const target = $(href)
+          if (target.length) {
+            $('html, body').animate({
+              scrollTop: target.offset().top - 200
             })
           }
+        } catch (e) {
+          console.warn('Failed to scroll to target:', href)
+        }
+      }
+    })
+  }
+
+  setupPictures() {
+    $('.post-content').each((_, postContent) => {
+      $(postContent).find('img').each((_, img) => {
+        const $img = $(img)
+        const src = img.src
+        const alt = img.alt || ''
+        const className = img.className || ''
+        
+        $img.parent('p').css('text-align', 'center')
+        
+        if (this.theme.lazy) {
+          $img.attr('data-src', src)
+            .removeAttr('src')
+            .addClass('lazyload')
+        }
+        
+        $img.wrap(
+          $('<a>')
+            .attr({ href: src, 'data-title': alt, 'data-lightbox': 'group' })
+            .addClass(className)
+        )
+      })
+    })
+  }
+
+  showComments() {
+    const $comments = $('#post-comments')
+    const $switch = $('#com-switch')
+    
+    // Check if elements exist
+    if (!$comments.length || !$switch.length) return
+    
+    // Remove old handler to prevent duplicates
+    $switch.off('click.comments')
+    $switch.on('click.comments', () => {
+      const isHidden = $comments.css('display') === 'none'
+      
+      if (isHidden) {
+        $comments.css('display', 'block').addClass('syuanpi fadeInDown')
+        $switch.css('transform', 'rotate(180deg)')
+      } else {
+        $switch.addClass('syuanpi').css('transform', '')
+        $comments.removeClass('fadeInDown')
+        this.animate('#post-comments', 'fadeOutUp', () => {
+          $comments.css('display', 'none')
         })
       }
-    }
-    Base.opScroll(this.scrollArr)
-    return Object.values(fns).forEach(fn => fn.call(this))
+    })
   }
 
   back2top() {
-    $('.toTop').on('click', function () {
-      $('html, body').animate({
-        scrollTop: 0
-      })
+    const $toTop = $('.toTop')
+    if (!$toTop.length) return
+    
+    $toTop.off('click.back2top')
+    $toTop.on('click.back2top', () => {
+      $('html, body').animate({ scrollTop: 0 })
     })
   }
 
   pushHeader() {
-    const $header = this.utils('cls', '#mobile-header')
+    const $header = $('#mobile-header')
     this.scrollArr.push(sct => {
-      if (sct > 5) {
-        $header.opreate('header-scroll', 'add')
-      } else {
-        $header.opreate('header-scroll', 'remove')
-      }
+      $header.toggleClass('header-scroll', sct > 5)
     })
   }
 
   updateRound(sct) {
-    const scrollPercentRounded = Math.floor(
-      sct
-      / ($(document).height() - $(window).height())
-      * 100
-    )
-    $('#scrollpercent').html(scrollPercentRounded)
+    const scrollHeight = $(document).height() - $(window).height()
+    const scrollPercent = Math.floor((sct / scrollHeight) * 100)
+    $('#scrollpercent').html(scrollPercent)
   }
 
   showToc() {
-    const utils = Base.utils
     const $toclink = $('.toc-link')
     const $headerlink = $('.headerlink')
-    this.scrollArr.push(function (sct) {
-      const headerlinkTop = $.map($headerlink, function (link) {
-        return $(link).offset().top
+    
+    this.scrollArr.push(sct => {
+      const headerlinkTop = $headerlink.map((_, link) => $(link).offset().top).get()
+      
+      // Handle title link
+      $('.title-link a').toggleClass('active', sct >= 0 && sct < 230)
+      
+      // Handle TOC links
+      $toclink.each((i, link) => {
+        const isLastOne = i + 1 === $toclink.length
+        const currentTop = headerlinkTop[i]
+        const nextTop = isLastOne ? Infinity : headerlinkTop[i + 1]
+        const isActive = currentTop < sct + 210 && sct + 210 <= nextTop
+        
+        $(link).toggleClass('active', isActive)
       })
-      $('.title-link a').each(function () {
-        const ele = utils('cls', this)
-        sct >= 0 && sct < 230
-          ? ele.opreate('active')
-          : ele.opreate('active', 'remove')
-      })
-      for (let i = 0; i < $toclink.length; i++) {
-        const
-          isLastOne = i + 1 === $toclink.length,
-          currentTop = headerlinkTop[i],
-          nextTop = isLastOne
-            ? Infinity
-            : headerlinkTop[i + 1],
-          $tl = utils('cls', $toclink[i])
-        currentTop < sct + 210 && sct + 210 <= nextTop
-          ? $tl.opreate('active')
-          : $tl.opreate('active', 'remove')
-      }
     })
   }
 
   titleStatus() {
     const title = document.title
-    var tme
-    document.addEventListener('visibilitychange', function () {
-      const sct = Math.floor($(window).scrollTop() / ($(document).height() - $(window).height()) * 100)
-      if ($(document).height() - $(window).height() === 0) sct = 100
+    let timer
+    
+    document.addEventListener('visibilitychange', () => {
+      const docHeight = $(document).height() - $(window).height()
+      let sct = docHeight === 0 ? 100 : Math.floor($(window).scrollTop() / docHeight * 100)
+      
       if (document.hidden) {
-        clearTimeout(tme)
-        document.title = 'Read ' + sct + '% · ' + title
+        clearTimeout(timer)
+        document.title = `Read ${sct}% · ${title}`
       } else {
-        document.title = 'Welcome Back · ' + title
-        tme = setTimeout(function () {
+        document.title = `Welcome Back · ${title}`
+        timer = setTimeout(() => {
           document.title = title
         }, 3000)
       }
@@ -145,82 +174,105 @@ class Base {
 
   showReward() {
     if (!this.theme.reward) return
-    const utils = Base.utils
-    const $btn = utils('ani', '#reward-btn')
-    $('#reward-btn').click(() => {
-      if (utils('iss', '#reward-wrapper').display()) {
-        $('#reward-wrapper').css('display', 'flex')
-        $btn.end('clarity')
+    
+    const $wrapper = $('#reward-wrapper')
+    const $btn = $('#reward-btn')
+    
+    // Check if elements exist
+    if (!$wrapper.length || !$btn.length) return
+    
+    // Remove old handler to prevent duplicates
+    $btn.off('click.reward')
+    $btn.on('click.reward', () => {
+      const isHidden = $wrapper.css('display') === 'none'
+      
+      if (isHidden) {
+        $wrapper.css('display', 'flex')
+        this.animate('#reward-btn', 'clarity')
       } else {
-        $btn.end('melt', () => {
-          $('#reward-wrapper').hide()
+        this.animate('#reward-btn', 'melt', () => {
+          $wrapper.hide()
         })
       }
     })
   }
 
   listenExit(elm, fn) {
+    // Check if element exists
+    if (!elm) return
+    
     fromEvent(elm, 'keydown').pipe(
       filter(e => e.keyCode === 27)
     ).subscribe(() => fn())
   }
 
   depth(open, close) {
-    const utils = this.utils
-    const $container = utils('cls', 'body')
-    const $containerInner = utils('cls', '.container-inner')
-    if ($container.exist('under')) {
-      $container.opreate('under', 'remove')
-      $containerInner.opreate('under', 'remove')
+    const $body = $('body')
+    const $inner = $('.container-inner')
+    const isUnder = $body.hasClass('under')
+    
+    if (isUnder) {
+      $body.removeClass('under')
+      $inner.removeClass('under')
       close.call(this)
     } else {
-      $container.opreate('under', 'add')
-      $containerInner.opreate('under', 'add')
+      $body.addClass('under')
+      $inner.addClass('under')
       open.call(this)
     }
   }
 
   tagcloud() {
-    const utils = this.utils
     const $tag = $('#tags')
-    const $tagcloud = utils('cls', '#tagcloud')
-    const $tagcloudAni = utils('ani', '#tagcloud')
-    const $search = utils('cls', '#search')
-    const $searchAni = utils('ani', '#search')
+    const $tagcloud = $('#tagcloud')
+    const $search = $('#search')
+    
     const closeFrame = () => {
-      $tagcloud.opreate('shuttleIn', 'remove')
-      $tagcloudAni.end('zoomOut', () => {
-        $tagcloud.opreate('syuanpi show', 'remove')
+      $tagcloud.removeClass('shuttleIn')
+      this.animate('#tagcloud', 'zoomOut', () => {
+        $tagcloud.removeClass('syuanpi show')
       })
     }
+    
     const switchShow = () => {
-      this.depth(() => $tagcloud.opreate('syuanpi shuttleIn show'), closeFrame)
+      this.depth(
+        () => $tagcloud.addClass('syuanpi shuttleIn show'), 
+        closeFrame
+      )
     }
-    this.listenExit($tag, switchShow)
+    
+    this.listenExit($tag[0], switchShow)
     this.listenExit(document.getElementsByClassName('tagcloud-taglist'), switchShow)
+    
     $tag.on('click', () => {
-      if ($search.exist('show')) {
-        $tagcloud.opreate('syuanpi shuttleIn show')
-        $search.opreate('shuttleIn', 'remove')
-        $searchAni.end('zoomOut', () => {
-          $search.opreate('syuanpi show', 'remove')
+      if ($search.hasClass('show')) {
+        $tagcloud.addClass('syuanpi shuttleIn show')
+        $search.removeClass('shuttleIn')
+        this.animate('#search', 'zoomOut', () => {
+          $search.removeClass('syuanpi show')
         })
         return
       }
       switchShow()
     })
+    
     $('#tagcloud').on('click', e => {
       e.stopPropagation()
       if (e.target.tagName === 'DIV') {
-        this.depth(() => $tagcloud.opreate('syuanpi shuttleIn show'), closeFrame)
+        this.depth(
+          () => $tagcloud.addClass('syuanpi shuttleIn show'), 
+          closeFrame
+        )
       }
     })
+    
     const tags$ = fromEvent(document.querySelectorAll('.tagcloud-tag button'), 'click').pipe(
       map(({ target }) => target)
     )
     const postlist$ = from(document.querySelectorAll('.tagcloud-postlist'))
     const cleanlist$ = postlist$.pipe(map(dom => dom.classList.remove('active')))
     const click$ = tags$.pipe(switchMap(() => cleanlist$))
+    
     zip(click$, tags$).pipe(
       map(([_, dom]) => dom),
       switchMap(v => postlist$.pipe(
@@ -231,41 +283,65 @@ class Base {
 
   search() {
     if (!this.theme.search) return
-    $('body').append(`<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>`)
-    const utils = this.utils
+    
+    // Only load marked.js once
+    if (!window.markedLoaded) {
+      $('body').append(`<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>`)
+      window.markedLoaded = true
+    }
+    
     const $searchbtn = $('#search-btn')
     const $result = $('#search-result')
-    const $search = utils('cls', '#search')
-    const $searchAni = utils('ani', '#search')
-    const $tagcloud = utils('cls', '#tagcloud')
-    const $tagcloudAni = utils('ani', '#tagcloud')
+    const $search = $('#search')
+    const $tagcloud = $('#tagcloud')
+    
+    // Check if search element exists
+    if (!$search.length) return
+    
     const closeFrame = () => {
-      $search.opreate('shuttleIn', 'remove')
-      $searchAni.end('zoomOut', () => {
-        $search.opreate('syuanpi show', 'remove')
+      $search.removeClass('shuttleIn')
+      this.animate('#search', 'zoomOut', () => {
+        $search.removeClass('syuanpi show')
       })
     }
+    
     const switchShow = () => {
-      this.depth(() => $search.opreate('syuanpi shuttleIn show'), closeFrame)
+      this.depth(
+        () => $search.addClass('syuanpi shuttleIn show'), 
+        closeFrame
+      )
     }
-    this.listenExit(document.getElementById('search'), switchShow)
-    $searchbtn.on('click', () => {
-      if ($tagcloud.exist('show')) {
-        $search.opreate('syuanpi shuttleIn show')
-        $tagcloud.opreate('shuttleIn', 'remove')
-        $tagcloudAni.end('zoomOut', () => {
-          $tagcloud.opreate('syuanpi show', 'remove')
+    
+    const searchElement = document.getElementById('search')
+    if (searchElement) {
+      this.listenExit(searchElement, switchShow)
+    }
+    
+    // Remove old event handlers to prevent duplicates
+    $searchbtn.off('click.search')
+    $searchbtn.on('click.search', () => {
+      if ($tagcloud.hasClass('show')) {
+        $search.addClass('syuanpi shuttleIn show')
+        $tagcloud.removeClass('shuttleIn')
+        this.animate('#tagcloud', 'zoomOut', () => {
+          $tagcloud.removeClass('syuanpi show')
         })
         return
       }
       switchShow()
     })
-    $('#search').on('click', e => {
+    
+    $('#search').off('click.search')
+    $('#search').on('click.search', e => {
       e.stopPropagation()
-      if(e.target.tagName === 'DIV') {
-        this.depth(() => $search.opreate('syuanpi shuttleIn show'), closeFrame)
+      if (e.target.tagName === 'DIV') {
+        this.depth(
+          () => $search.addClass('syuanpi shuttleIn show'), 
+          closeFrame
+        )
       }
     })
+    
     genSearch(`${this.config.baseUrl}search.xml`, 'search-input')
       .subscribe(vals => {
         const list = body => `<ul class="search-result-list syuanpi fadeInUpShort">${body}</ul>`
@@ -281,45 +357,286 @@ class Base {
   }
 
   headerMenu() {
-    const utils = this.utils
-    const $mobileMenu = utils('cls', '.mobile-header-body')
-    const $haderline = utils('cls', '.header-menu-line')
+    const $mobileMenu = $('.mobile-header-body')
+    const $headerLine = $('.header-menu-line')
     const $mtag = $('#mobile-tags')
-    const $tagcloud = utils('cls', '#tagcloud')
+    const $tagcloud = $('#tagcloud')
+    
     $mtag.on('click', () => {
-      $mobileMenu.opreate('show', 'remove')
-      $haderline.opreate('show', 'remove')
-      $tagcloud.opreate('syuanpi shuttleIn show')
+      $mobileMenu.removeClass('show')
+      $headerLine.removeClass('show')
+      $tagcloud.addClass('syuanpi shuttleIn show')
     })
+    
     $('#mobile-left').on('click', () => {
-      this.depth(() => {
-        $mobileMenu.opreate('show')
-        $haderline.opreate('show')
-      }, () => {
-        $mobileMenu.opreate('show', 'remove')
-        $haderline.opreate('show', 'remove')
-      })
+      this.depth(
+        () => {
+          $mobileMenu.addClass('show')
+          $headerLine.addClass('show')
+        }, 
+        () => {
+          $mobileMenu.removeClass('show')
+          $headerLine.removeClass('show')
+        }
+      )
     })
   }
 
-  pjax() {
+  navigation() {
     if (!this.theme.pjax) return
-    const utils = this.utils
-    const $container = utils('cls', '.container-inner')
-    const $header = utils('cls', '.header')
-    const $headerWrapper = utils('cls', '.header-wrapper')
-    $(document).pjax('.container-inner a', '.container-inner', { fragment: 'container-inner' })
-    $(document).on('pjax:send', function () {
-      $container.opreate('syuanpi fadeOutLeftShort')
-      $headerWrapper.opreate('syuanpi fadeOutLeftShort')
-      $header.opreate('melt')
-    })
+    
+    const $container = $('.container-inner')
+    const $header = $('.header')
+    const $headerWrapper = $('.header-wrapper')
+    const self = this // Capture this context
+    
+    // Check if Navigation API is supported
+    if (window.navigation) {
+      // Modern Navigation API implementation
+      window.navigation.addEventListener('navigate', (event) => {
+        // Only intercept same-origin navigations
+        const url = new URL(event.destination.url)
+        
+        if (location.origin !== url.origin) return
+        
+        // Don't intercept if it's a download or form submission
+        if (event.downloadRequest || event.formData) return
+        
+        // Don't intercept if it's not a traverse or push/replace navigation
+        if (!event.canIntercept) return
+        
+        // Only intercept clicks on links within container-inner
+        if (event.sourceElement && !$(event.sourceElement).closest('.container-inner').length) {
+          return
+        }
+        
+        event.intercept({
+          async handler() {
+            // Add exit animations
+            $container.addClass('syuanpi fadeOutLeftShort')
+            $headerWrapper.addClass('syuanpi fadeOutLeftShort')
+            $header.addClass('melt')
+            
+            // Wait for animation to complete
+            await new Promise(resolve => setTimeout(resolve, 300))
+            
+            // Fetch the new page
+            const response = await fetch(url.pathname)
+            const html = await response.text()
+            
+            // Parse the HTML
+            const parser = new DOMParser()
+            const doc = parser.parseFromString(html, 'text/html')
+            
+            // Extract the container-inner content
+            const newContent = doc.querySelector('.container-inner')
+            
+            if (newContent) {
+              // Replace the content and copy classes from fetched HTML
+              $container.html(newContent.innerHTML)
+              $container.attr('class', newContent.className)
+              
+              // Remove exit animations and trigger enter animations
+              $container.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+              $headerWrapper.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+              $header.removeClass('melt')
+              
+              // Re-initialize components that need setup on new content
+              setTimeout(async () => {
+                $container.removeClass('fadeInRightShort')
+                $headerWrapper.removeClass('fadeInRightShort')
+                
+                // Clear old scroll handlers
+                self.scrollArr = []
+                
+                // Re-run init methods for new content
+                self.smoothScroll()
+                self.setupPictures()
+                self.showComments()
+                self.showReward()
+                self.showToc()
+                self.pushHeader()
+                
+                // Re-initialize scroll handlers
+                Base.opScroll(self.scrollArr)
+                
+                // Re-render Mermaid diagrams if available
+                if (window.renderMermaids) {
+                  await window.renderMermaids()
+                }
+                
+                // Update page title
+                document.title = doc.title
+                
+                // Scroll to top
+                window.scrollTo(0, 0)
+              }, 300)
+            }
+          }
+        })
+      })
+    } else {
+      // Fallback: Manual click interception with History API for older browsers
+      console.info('Navigation API not supported, using History API fallback')
+      
+      // Intercept clicks on links within container-inner
+      $(document).on('click', '.container-inner a', async (e) => {
+        const $link = $(e.currentTarget)
+        const href = $link.attr('href')
+        
+        // Skip external links, anchors, and special protocols
+        if (!href || href.startsWith('#') || href.startsWith('javascript:') || 
+            href.startsWith('mailto:') || $link.attr('target') === '_blank') {
+          return
+        }
+        
+        try {
+          const url = new URL(href, window.location.origin)
+          
+          // Only intercept same-origin links
+          if (url.origin !== window.location.origin) return
+          
+          e.preventDefault()
+          
+          // Add exit animations
+          $container.addClass('syuanpi fadeOutLeftShort')
+          $headerWrapper.addClass('syuanpi fadeOutLeftShort')
+          $header.addClass('melt')
+          
+          // Wait for animation to complete
+          await new Promise(resolve => setTimeout(resolve, 300))
+          
+          // Fetch the new page
+          const response = await fetch(url.href)
+          const html = await response.text()
+          
+          // Parse the HTML
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(html, 'text/html')
+          
+          // Extract the container-inner content
+          const newContent = doc.querySelector('.container-inner')
+          
+          if (newContent) {
+            // Replace the content and copy classes from fetched HTML
+            $container.html(newContent.innerHTML)
+            $container.attr('class', newContent.className)
+            
+            // Update browser history
+            window.history.pushState({ path: url.href }, '', url.href)
+            
+            // Remove exit animations and trigger enter animations
+            $container.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+            $headerWrapper.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+            $header.removeClass('melt')
+            
+            // Re-initialize components that need setup on new content
+            setTimeout(async () => {
+              $container.removeClass('fadeInRightShort')
+              $headerWrapper.removeClass('fadeInRightShort')
+              
+              // Clear old scroll handlers
+              self.scrollArr = []
+              
+              // Re-run init methods for new content
+              self.smoothScroll()
+              self.setupPictures()
+              self.showComments()
+              self.showReward()
+              self.showToc()
+              self.pushHeader()
+              
+              // Re-initialize scroll handlers
+              Base.opScroll(self.scrollArr)
+              
+              // Re-render Mermaid diagrams if available
+              if (window.renderMermaids) {
+                await window.renderMermaids()
+              }
+              
+              // Update page title
+              document.title = doc.title
+              
+              // Scroll to top
+              window.scrollTo(0, 0)
+            }, 300)
+          }
+        } catch (err) {
+          console.error('Navigation failed:', err)
+          // Let the browser handle the navigation on error
+          window.location.href = href
+        }
+      })
+      
+      // Handle back/forward buttons
+      window.addEventListener('popstate', async (e) => {
+        try {
+          // Add exit animations
+          $container.addClass('syuanpi fadeOutLeftShort')
+          $headerWrapper.addClass('syuanpi fadeOutLeftShort')
+          $header.addClass('melt')
+          
+          await new Promise(resolve => setTimeout(resolve, 300))
+          
+          // Fetch the page
+          const response = await fetch(window.location.href)
+          const html = await response.text()
+          
+          // Parse the HTML
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(html, 'text/html')
+          
+          // Extract the container-inner content
+          const newContent = doc.querySelector('.container-inner')
+          
+          if (newContent) {
+            // Replace the content and copy classes from fetched HTML
+            $container.html(newContent.innerHTML)
+            $container.attr('class', newContent.className)
+            
+            // Remove exit animations
+            $container.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+            $headerWrapper.removeClass('fadeOutLeftShort').addClass('fadeInRightShort')
+            $header.removeClass('melt')
+            
+            setTimeout(async () => {
+              $container.removeClass('fadeInRightShort')
+              $headerWrapper.removeClass('fadeInRightShort')
+              
+              // Clear old scroll handlers
+              self.scrollArr = []
+              
+              // Re-initialize
+              self.smoothScroll()
+              self.setupPictures()
+              self.showComments()
+              self.showReward()
+              self.showToc()
+              self.pushHeader()
+              
+              // Re-initialize scroll handlers
+              Base.opScroll(self.scrollArr)
+              
+              // Re-render Mermaid diagrams if available
+              if (window.renderMermaids) {
+                await window.renderMermaids()
+              }
+              
+              document.title = doc.title
+              window.scrollTo(0, 0)
+            }, 300)
+          }
+        } catch (err) {
+          console.error('Popstate navigation failed:', err)
+          window.location.reload()
+        }
+      })
+    }
   }
 
   bootstarp() {
     this.showToc()
     this.back2top()
-    this.switchToc()
     this.titleStatus()
     this.init()
     this.pushHeader()
@@ -327,55 +644,16 @@ class Base {
     this.search()
     this.showReward()
     this.headerMenu()
-    this.pjax()
-  }
-
-  static utils(g, e) {
-    const cls = ele => ({
-      opreate(cls, opt) {
-        return opt === 'remove'
-          ? $(ele).removeClass(cls)
-          : $(ele).addClass(cls)
-      },
-      exist(cls) {
-        return $(ele).hasClass(cls)
-      }
-    })
-    const iss = ele => ({
-      banderole: () => {
-        return this.theme.scheme === 'banderole'
-      },
-      balance: () => {
-        return this.theme.scheme === 'balance'
-      },
-      display() {
-        return $(ele).css('display') === 'none'
-      }
-    })
-    const ani = ele => ({
-      close() {
-        return cls.opreate('.syuanpi', 'syuanpi', 'remove')
-      },
-      end(ani, fn) {
-        $(ele)
-          .addClass(ani)
-          .one('webkitAnimationEnd AnimationEnd', function () {
-            $(ele).removeClass(ani)
-            fn && fn.call(null, ele)
-          })
-      }
-    })
-    return { cls, iss, ani }[g](e)
+    this.navigation()
   }
 
   static opScroll(fns) {
-    const scroll$ = fromEvent(window, 'scroll')
-      .pipe(
-        map(v => v.target.scrollingElement.scrollTop)
-      )
-    fns.length && scroll$.subscribe(next => fns.forEach(fn => fn(next)))
+    if (!fns.length) return
+    
+    fromEvent(window, 'scroll')
+      .pipe(map(v => v.target.scrollingElement.scrollTop))
+      .subscribe(scrollTop => fns.forEach(fn => fn(scrollTop)))
   }
 }
-
 
 export default Base

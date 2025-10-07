@@ -26,10 +26,6 @@
   <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.1/lazysizes.min.js" async></script>
 {% endif %}
 
-{% if theme.pjax %}
-  {{ js('script/lib/pjax/pjax') }}
-{% endif %}
-
 {% if theme.scheme == 'banderole' %}
   {{ js('script/scheme/banderole') }}
 {% else %}
@@ -38,30 +34,42 @@
 
 {{ js('script/bootstarp') }}
 
-{% if is_post() %}
-<script>
-if (nlviconfig.theme.toc) {
-  $(".container-inner").addClass("has_toc");
-}
-</script>
-{% endif %}
-
 <script type="module">
-  window.addEventListener('DOMContentLoaded', async () => {
-    const mermaid = (await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')).default;
-    mermaid.initialize({ startOnLoad: false });
-    window.mermaid = mermaid;
+  // Initialize Mermaid
+  let mermaidInitialized = false;
+  
+  async function initMermaid() {
+    if (!mermaidInitialized) {
+      const mermaid = (await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')).default;
+      mermaid.initialize({ startOnLoad: false });
+      window.mermaid = mermaid;
+      mermaidInitialized = true;
+    }
+  }
 
-    async function renderMermaids() {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const activeClass = prefersDark ? 'mermaid-dark' : 'mermaid-light';
-      mermaid.run({
-        querySelector: '.mermaid.' + activeClass,
+  async function renderMermaids() {
+    await initMermaid();
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const activeClass = prefersDark ? 'mermaid-dark' : 'mermaid-light';
+    
+    // Find all unrendered mermaid diagrams
+    const mermaidElements = document.querySelectorAll('.mermaid.' + activeClass + ':not([data-processed])');
+    
+    if (mermaidElements.length > 0) {
+      await window.mermaid.run({
+        querySelector: '.mermaid.' + activeClass + ':not([data-processed])',
       });
     }
+  }
 
-    renderMermaids();
+  // Make renderMermaids globally accessible for navigation events
+  window.renderMermaids = renderMermaids;
 
+  // Initial render on page load
+  window.addEventListener('DOMContentLoaded', async () => {
+    await renderMermaids();
+
+    // Re-render on color scheme change
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
       renderMermaids();
     });

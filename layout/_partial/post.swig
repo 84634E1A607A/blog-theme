@@ -33,20 +33,26 @@
             const postViewCount = document.getElementById('post-view-count-' + postPath);
             const postViews = document.getElementById('post-views-' + postPath);
             const postUpdatedViewsSeparator = document.getElementById('post-updated-views-separator-' + postPath);
+            
+            // Check if elements exist before fetching
+            if (!postViewCount || !postViews) {
+              return;
+            }
+            
             fetch('/api/views/' + postPath)
               .then(response => response.json())
               .then(data => {
-                if (typeof data === 'number') {
+                if (typeof data === 'number' && postViewCount) {
                   postViewCount.textContent = data;
                 } else {
-                  postViews.style.display = 'none';
-                  postUpdatedViewsSeparator.style.display = 'none';
+                  if (postViews) postViews.style.display = 'none';
+                  if (postUpdatedViewsSeparator) postUpdatedViewsSeparator.style.display = 'none';
                 }
               })
               .catch(error => {
                 console.error('Error fetching post views:', error);
-                postViews.style.display = 'none';
-                postUpdatedViewsSeparator.style.display = 'none';
+                if (postViews) postViews.style.display = 'none';
+                if (postUpdatedViewsSeparator) postUpdatedViewsSeparator.style.display = 'none';
               });
           })();
           </script>
@@ -99,6 +105,12 @@
     <script>
     (() => {
       const beacon = document.getElementById('post-view-beacon-{{ post.path }}');
+      
+      // Check if beacon exists
+      if (!beacon) {
+        return;
+      }
+      
       beacon.addEventListener('load', function() {
         beacon.style.display = 'none';
       });

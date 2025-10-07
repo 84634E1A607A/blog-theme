@@ -44,9 +44,6 @@ theme-style: sakura
 # Article Setting
 # ===========================================
 
-# Navigator in post
-toc: true
-
 # Use copyright infomation
 copyright:
   enable: true
@@ -122,7 +119,8 @@ visit_count: false
 # Theme Settings
 # ===========================================
 
-# pjax
+# Navigation API - enable smooth page transitions (requires modern browser)
+# Falls back gracefully for browsers without support
 pjax: true
 
 # mathjax

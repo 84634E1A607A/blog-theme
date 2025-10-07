@@ -11,8 +11,7 @@
       friends: {{ Boolean(theme.friendLink) }},
       reward: {{ theme.reward.enable or false }},
       pjax: {{ theme.pjax or false }},
-      lazy: {{ theme.lazyload or false }},
-      toc: {{ theme.toc or false }}
+      lazy: {{ theme.lazyload or false }}
     }
   }
 </script>
