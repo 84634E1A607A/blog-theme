@@ -489,13 +489,19 @@ class Base {
             href.startsWith('mailto:') || $link.attr('target') === '_blank') {
           return
         }
+
+        // If target is new tab, do not intercept
+        if ($link.attr('target') === '_blank') return
+
+        // If user Ctrl-clicks or middle-clicks, do not intercept
+        if (e.ctrlKey || e.metaKey || e.which === 2) return
         
         try {
           const url = new URL(href, window.location.origin)
           
           // Only intercept same-origin links
           if (url.origin !== window.location.origin) return
-          
+
           e.preventDefault()
           
           // Add exit animations
