@@ -5,6 +5,6 @@
     {% include "../../_script/_comment/changyan.swig" %}
     {% include "../../_script/_comment/disqus.swig" %}
     {% include "../../_script/_comment/livere.swig" %}
-    {% include "../../_script/_comment/utterances.swig" %}
+    {% include "../../_script/_comment/giscus.swig" %}
   </div>
 {% endif %}

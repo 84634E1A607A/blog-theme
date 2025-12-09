@@ -72,7 +72,7 @@ reward:
 comments:
   enable: true
 
-  utterances: true
+  giscus: true
 
   # disqus:
   # livere_datauid:
