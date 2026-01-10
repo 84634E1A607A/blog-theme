@@ -23,7 +23,7 @@
 {% if config.keywords %}
   <meta name="keywords" content="{{ config.keywords }}" />
 {% endif %}
-{% set metaTags = page.tags | toarray %}
+{% set metaTags = (page.tags or []) | toarray %}
 {% if metaTags.length %}
   <meta name="keywords" content="{% for tag in metaTags %}{{ tag.name or tag }}, {% endfor %}nlvi" />
 {% endif %}
@@ -78,13 +78,13 @@
   {% elif config.author %}
     <meta property="article:author" content="{{ config.author }}" />
   {% endif %}
-  {% set metaTags = page.tags | toarray %}
+  {% set metaTags = (page.tags or []) | toarray %}
   {% if metaTags.length %}
     {% for tag in metaTags %}
       <meta property="article:tag" content="{{ tag.name or tag }}" />
     {% endfor %}
   {% endif %}
-  {% set metaCategories = page.categories | toarray %}
+  {% set metaCategories = (page.categories or []) | toarray %}
   {% if metaCategories.length %}
     {% for category in metaCategories %}
       <meta property="article:section" content="{{ category.name }}" />
