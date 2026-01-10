@@ -284,12 +284,6 @@ class Base {
   search() {
     if (!this.theme.search) return
 
-    // Only load marked.js once
-    if (!window.markedLoaded) {
-      $('body').append(`<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>`)
-      window.markedLoaded = true
-    }
-
     const $searchbtn = $('#search-btn')
     const $result = $('#search-result')
     const $search = $('#search')
