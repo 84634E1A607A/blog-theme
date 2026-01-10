@@ -23,8 +23,9 @@
 {% if config.keywords %}
   <meta name="keywords" content="{{ config.keywords }}" />
 {% endif %}
-{% if page.tags and page.tags.length %}
-  <meta name="keywords" content="{% for tag in page.tags %}{{ tag.name }}, {% endfor %}nlvi" />
+{% set metaTags = page.tags | toarray %}
+{% if metaTags.length %}
+  <meta name="keywords" content="{% for tag in metaTags %}{{ tag.name or tag }}, {% endfor %}nlvi" />
 {% endif %}
 {% if config.canonical %}
   {% if page.permalink %}
@@ -80,7 +81,7 @@
   {% set metaTags = page.tags | toarray %}
   {% if metaTags.length %}
     {% for tag in metaTags %}
-      <meta property="article:tag" content="{{ tag.name }}" />
+      <meta property="article:tag" content="{{ tag.name or tag }}" />
     {% endfor %}
   {% endif %}
   {% set metaCategories = page.categories | toarray %}
