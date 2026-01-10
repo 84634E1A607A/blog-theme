@@ -43,7 +43,7 @@
 1. 在 Hexo 所在目录中执行以下命令。
   
   ```bash
-  npm i hexo-renderer-swig --save
+  npm i hexo-renderer-nunjucks --save
   ```
   
 2. 放到你的 Hexo 项目的`themes`文件夹里面，修改你的 Hexo 项目的 `_config.yml` 里面的`theme`如下。

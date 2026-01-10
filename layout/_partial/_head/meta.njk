@@ -77,13 +77,15 @@
   {% elif config.author %}
     <meta property="article:author" content="{{ config.author }}" />
   {% endif %}
-  {% if page.tags and page.tags.length %}
-    {% for tag in page.tags %}
+  {% set metaTags = page.tags | toarray %}
+  {% if metaTags.length %}
+    {% for tag in metaTags %}
       <meta property="article:tag" content="{{ tag.name }}" />
     {% endfor %}
   {% endif %}
-  {% if page.categories and page.categories.length %}
-    {% for category in page.categories %}
+  {% set metaCategories = page.categories | toarray %}
+  {% if metaCategories.length %}
+    {% for category in metaCategories %}
       <meta property="article:section" content="{{ category.name }}" />
     {% endfor %}
   {% endif %}

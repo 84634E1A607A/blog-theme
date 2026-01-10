@@ -1,5 +1,5 @@
-{% extends "_layout.swig" %}
-{% import '_partial/post.swig' as postPage %}
+{% extends "_layout.njk" %}
+{% import '_partial/post.njk' as postPage with context %}
 
 {% block title %} {{ page.title }} · {{ config.title }} {% endblock %}
 
