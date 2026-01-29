@@ -52,16 +52,79 @@
       padding: 0 (yard)
   .code
     color: inherit
+    width: 100%
     pre
       padding: 0 (yard)
     .comment
       font-size: 14px
-  .line
-    height: 22px
   tr, td
     margin: 0
 
   .shiki, .shiki span
     background-color: transparent !important
+
+    .line
+      display: inline-block
+      width: 100%
+      height: 22px
+
+    .tab, .space
+      position: relative
+      visibility: visible;
+
+      &:before
+        position: absolute;
+        opacity: 0.2;
+      
+    .space:before
+      content: '·';
+    
+    .tab:before
+      content: '⇥';
+
+    .diff:before
+      display: inline-block;
+      position: relative;
+      left: -0.7em;
+      width: 0;
+
+    .diff.remove
+      +theme_light()
+        background-color: rgba(244, 63, 94, .12) !important
+      +theme_dark()
+        background-color: rgba(244, 63, 94, .24) !important
+      
+      &:before
+        content: '-';
+        +theme_light()
+          color: rgb(244, 63, 94) !important
+        +theme_dark()
+          color: #a91e3a !important
+    
+    .diff.add
+      +theme_light()
+        background-color: rgba(16, 185, 129, .08) !important
+      +theme_dark()
+        background-color: rgba(16, 185, 129, .16) !important
+
+      &:before
+        content: '+';
+        +theme_light()
+          color: rgb(16, 185, 129) !important
+        +theme_dark()
+          color: #1a7854 !important
+    
+    .highlighted
+      +theme_light()
+        background-color: rgba($theme-color-hint, 0.1) !important
+      +theme_dark()
+        background-color: rgba($theme-color-hint, 0.3) !important
+
+    .highlighted-word
+      +theme_light()
+        background-color: rgba($theme-color-hint, 0.1) !important
+      +theme_dark()
+        background-color: rgba($theme-color-hint, 0.7) !important
+
     +theme_dark()
       color: var(--shiki-dark) !important
