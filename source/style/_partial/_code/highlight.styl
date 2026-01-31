@@ -63,6 +63,10 @@
   .shiki, .shiki span
     background-color: transparent !important
 
+    +theme_dark()
+      color: var(--shiki-dark) !important
+  
+  .shiki
     .line
       display: inline-block
       width: 100%
@@ -125,6 +129,13 @@
         background-color: rgba($theme-color-hint, 0.1) !important
       +theme_dark()
         background-color: rgba($theme-color-hint, 0.7) !important
+    
+    &.has-focused
+      .line
+        transition: filter 0.2s ease-in-out
+        &:not(.focused)
+          filter: blur(1px) brightness(0.7)
 
-    +theme_dark()
-      color: var(--shiki-dark) !important
+      &:hover
+        .line:not(.focused)
+          filter: blur(0) brightness(0.7)
