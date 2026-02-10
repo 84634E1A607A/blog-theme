@@ -64,8 +64,8 @@
     background-color: transparent !important
 
     +theme_dark()
-      color: var(--shiki-dark) !important
-  
+      color: var(--shiki-dark)
+
   .line
     display: inline-block
     height: 22px
@@ -82,10 +82,10 @@
       &:before
         position: absolute;
         opacity: 0.2;
-      
+
     .space:before
       content: '·';
-    
+
     .tab:before
       content: '⇥';
 
@@ -100,14 +100,14 @@
         background-color: rgba(244, 63, 94, .12) !important
       +theme_dark()
         background-color: rgba(244, 63, 94, .24) !important
-      
+
       &:before
         content: '-';
         +theme_light()
           color: rgb(244, 63, 94) !important
         +theme_dark()
           color: #a91e3a !important
-    
+
     .diff.add
       +theme_light()
         background-color: rgba(16, 185, 129, .08) !important
@@ -120,7 +120,7 @@
           color: rgb(16, 185, 129) !important
         +theme_dark()
           color: #1a7854 !important
-    
+
     .highlighted
       +theme_light()
         background-color: rgba($theme-color-hint, 0.1) !important
@@ -132,7 +132,7 @@
         background-color: rgba($theme-color-hint, 0.1) !important
       +theme_dark()
         background-color: rgba($theme-color-hint, 0.7) !important
-    
+
     &.has-focused
       .line
         transition: filter 0.2s ease-in-out

@@ -1,0 +1,393 @@
+:root,
+:host {
+  --color-cat-rosewater: light-dark(rgb(var(--color-cat-latte-rosewater)), rgb(var(--color-cat-frappe-rosewater)));
+  --color-cat-flamingo: light-dark(rgb(var(--color-cat-latte-flamingo)), rgb(var(--color-cat-frappe-flamingo)));
+  --color-cat-pink: light-dark(rgb(var(--color-cat-latte-pink)), rgb(var(--color-cat-frappe-pink)));
+  --color-cat-mauve: light-dark(rgb(var(--color-cat-latte-mauve)), rgb(var(--color-cat-frappe-mauve)));
+  --color-cat-red: light-dark(rgb(var(--color-cat-latte-red)), rgb(var(--color-cat-frappe-red)));
+  --color-cat-maroon: light-dark(rgb(var(--color-cat-latte-maroon)), rgb(var(--color-cat-frappe-maroon)));
+  --color-cat-peach: light-dark(rgb(var(--color-cat-latte-peach)), rgb(var(--color-cat-frappe-peach)));
+  --color-cat-yellow: light-dark(rgb(var(--color-cat-latte-yellow)), rgb(var(--color-cat-frappe-yellow)));
+  --color-cat-green: light-dark(rgb(var(--color-cat-latte-green)), rgb(var(--color-cat-frappe-green)));
+  --color-cat-teal: light-dark(rgb(var(--color-cat-latte-teal)), rgb(var(--color-cat-frappe-teal)));
+  --color-cat-sky: light-dark(rgb(var(--color-cat-latte-sky)), rgb(var(--color-cat-frappe-sky)));
+  --color-cat-sapphire: light-dark(rgb(var(--color-cat-latte-sapphire)), rgb(var(--color-cat-frappe-sapphire)));
+  --color-cat-blue: light-dark(rgb(var(--color-cat-latte-blue)), rgb(var(--color-cat-frappe-blue)));
+  --color-cat-lavender: light-dark(rgb(var(--color-cat-latte-lavender)), rgb(var(--color-cat-frappe-lavender)));
+  --color-cat-text: light-dark(rgb(var(--color-cat-latte-text)), rgb(var(--color-cat-frappe-text)));
+  --color-cat-subtext1: light-dark(rgb(var(--color-cat-latte-subtext1)), rgb(var(--color-cat-frappe-subtext1)));
+  --color-cat-overlay2: light-dark(rgb(var(--color-cat-latte-overlay2)), rgb(var(--color-cat-frappe-overlay2)));
+  --color-cat-overlay1: light-dark(rgb(var(--color-cat-latte-overlay1)), rgb(var(--color-cat-frappe-overlay1)));
+  --color-cat-overlay0: light-dark(rgb(var(--color-cat-latte-overlay0)), rgb(var(--color-cat-frappe-overlay0)));
+  --color-cat-surface2: light-dark(rgb(var(--color-cat-latte-surface2)), rgb(var(--color-cat-frappe-surface2)));
+  --color-cat-base: light-dark(rgb(var(--color-cat-latte-base)), rgb(var(--color-cat-frappe-base)));
+  --color-cat-latte-rosewater: 220, 138, 120;
+  --color-cat-latte-flamingo: 221, 120, 120;
+  --color-cat-latte-pink: 234, 118, 203;
+  --color-cat-latte-mauve: 136, 57, 239;
+  --color-cat-latte-red: 210, 15, 57;
+  --color-cat-latte-maroon: 230, 69, 83;
+  --color-cat-latte-peach: 254, 100, 11;
+  --color-cat-latte-yellow: 223, 142, 29;
+  --color-cat-latte-green: 64, 160, 43;
+  --color-cat-latte-teal: 23, 146, 153;
+  --color-cat-latte-sky: 4, 165, 229;
+  --color-cat-latte-sapphire: 32, 159, 181;
+  --color-cat-latte-blue: 30, 102, 245;
+  --color-cat-latte-lavender: 114, 135, 253;
+  --color-cat-latte-text: 76, 79, 105;
+  --color-cat-latte-subtext1: 92, 95, 119;
+  --color-cat-latte-subtext0: 108, 111, 133;
+  --color-cat-latte-overlay2: 124, 127, 147;
+  --color-cat-latte-overlay1: 140, 143, 161;
+  --color-cat-latte-overlay0: 156, 160, 176;
+  --color-cat-latte-surface2: 172, 176, 190;
+  --color-cat-latte-surface1: 188, 192, 204;
+  --color-cat-latte-surface0: 204, 208, 218;
+  --color-cat-latte-base: 239, 241, 245;
+  --color-cat-latte-mantle: 230, 233, 239;
+  --color-cat-latte-crust: 220, 224, 232;
+  --color-cat-frappe-rosewater: 242, 213, 207;
+  --color-cat-frappe-flamingo: 238, 190, 190;
+  --color-cat-frappe-pink: 244, 184, 228;
+  --color-cat-frappe-mauve: 202, 158, 230;
+  --color-cat-frappe-red: 231, 130, 132;
+  --color-cat-frappe-maroon: 234, 153, 156;
+  --color-cat-frappe-peach: 239, 159, 118;
+  --color-cat-frappe-yellow: 229, 200, 144;
+  --color-cat-frappe-green: 166, 209, 137;
+  --color-cat-frappe-teal: 129, 200, 190;
+  --color-cat-frappe-sky: 153, 209, 219;
+  --color-cat-frappe-sapphire: 133, 193, 220;
+  --color-cat-frappe-blue: 140, 170, 238;
+  --color-cat-frappe-lavender: 186, 187, 241;
+  --color-cat-frappe-text: 198, 208, 245;
+  --color-cat-frappe-subtext1: 181, 191, 226;
+  --color-cat-frappe-subtext0: 165, 173, 206;
+  --color-cat-frappe-overlay2: 148, 156, 187;
+  --color-cat-frappe-overlay1: 131, 139, 167;
+  --color-cat-frappe-overlay0: 115, 121, 148;
+  --color-cat-frappe-surface2: 98, 104, 128;
+  --color-cat-frappe-surface1: 81, 87, 109;
+  --color-cat-frappe-surface0: 65, 69, 89;
+  --color-cat-frappe-base: 48, 52, 70;
+  --color-cat-frappe-mantle: 41, 44, 60;
+  --color-cat-frappe-crust: 35, 38, 52;
+}
+
+pre.shiki span.variable {
+  color: var(--color-cat-text)
+}
+
+pre.shiki span.variable.builtin {
+  color: var(--color-cat-red)
+}
+
+pre.shiki span.variable.parameter {
+  color: var(--color-cat-maroon)
+}
+
+pre.shiki span.variable.member {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.variable.special {
+  color: var(--color-cat-red)
+}
+
+pre.shiki span.constant,
+pre.shiki span.constant.builtin {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.constant.macro {
+  color: var(--color-cat-mauve)
+}
+
+pre.shiki span.module {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.label {
+  color: var(--color-cat-sapphire)
+}
+
+pre.shiki span.string {
+  color: var(--color-cat-green)
+}
+
+pre.shiki span.string.documentation {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.string.regexp {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.string.escape,
+pre.shiki span.string.special,
+pre.shiki span.string.special.path {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.string.special.symbol {
+  color: var(--color-cat-flamingo)
+}
+
+pre.shiki span.string.special.url {
+  color: var(--color-cat-rosewater)
+}
+
+pre.shiki span.character {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.character.special {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.boolean,
+pre.shiki span.number,
+pre.shiki span.number.float {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.tag {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.tag.attribute {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.tag.delimiter {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.type {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.type.builtin {
+  color: var(--color-cat-mauve)
+}
+
+pre.shiki span.type.definition,
+pre.shiki span.type.interface,
+pre.shiki span.type.super {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.attribute {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.property,
+pre.shiki span.function {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.function.builtin {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.function.call {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.function.macro {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.function.method,
+pre.shiki span.function.method.call {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.constructor {
+  color: var(--color-cat-flamingo)
+}
+
+pre.shiki span.operator {
+  color: var(--color-cat-sky)
+}
+
+pre.shiki span.keyword,
+pre.shiki span.keyword.modifier,
+pre.shiki span.keyword.type,
+pre.shiki span.keyword.coroutine,
+pre.shiki span.keyword.function,
+pre.shiki span.keyword.operator,
+pre.shiki span.keyword.import,
+pre.shiki span.keyword.repeat,
+pre.shiki span.keyword.return,
+pre.shiki span.keyword.debug,
+pre.shiki span.keyword.exception,
+pre.shiki span.keyword.conditional,
+pre.shiki span.keyword.conditional.ternary {
+  color: var(--color-cat-mauve)
+}
+
+pre.shiki span.keyword.directive,
+pre.shiki span.keyword.directive.define {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.keyword.export {
+  color: var(--color-cat-sky)
+}
+
+pre.shiki span.punctuation,
+pre.shiki span.punctuation.delimiter,
+pre.shiki span.punctuation.bracket {
+  color: var(--color-cat-overlay2)
+}
+
+pre.shiki span.punctuation.special {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.punctuation.special.symbol {
+  color: var(--color-cat-flamingo)
+}
+
+pre.shiki span.punctuation.list_marker {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.comment,
+pre.shiki span.comment.doc,
+pre.shiki span.comment.documentation {
+  color: var(--color-cat-overlay2)
+}
+
+pre.shiki span.comment.info {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.comment.error {
+  color: var(--color-cat-red)
+}
+
+pre.shiki span.comment.warning,
+pre.shiki span.comment.warn {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.comment.hint {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.comment.todo {
+  color: var(--color-cat-flamingo)
+}
+
+pre.shiki span.comment.note {
+  color: var(--color-cat-rosewater)
+}
+
+pre.shiki span.diff.plus {
+  color: var(--color-cat-green)
+}
+
+pre.shiki span.diff.minus {
+  color: var(--color-cat-red)
+}
+
+pre.shiki span.parameter {
+  color: var(--color-cat-maroon)
+}
+
+pre.shiki span.field {
+  color: var(--color-cat-lavender)
+}
+
+pre.shiki span.namespace {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.float {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.symbol {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.string.regex {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.text {
+  color: var(--color-cat-text)
+}
+
+pre.shiki span.emphasis.strong,
+pre.shiki span.emphasis,
+pre.shiki span.embedded {
+  color: var(--color-cat-maroon)
+}
+
+pre.shiki span.text.literal {
+  color: var(--color-cat-green)
+}
+
+pre.shiki span.concept {
+  color: var(--color-cat-sapphire)
+}
+
+pre.shiki span.enum {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.function.decorator {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.type.class.definition {
+  color: var(--color-cat-yellow)
+}
+
+pre.shiki span.hint {
+  color: var(--color-cat-overlay1)
+}
+
+pre.shiki span.link_text {
+  color: var(--color-cat-lavender)
+}
+
+pre.shiki span.link_uri {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.parent {
+  color: var(--color-cat-peach)
+}
+
+pre.shiki span.predictive {
+  color: var(--color-cat-overlay0)
+}
+
+pre.shiki span.predoc {
+  color: var(--color-cat-red)
+}
+
+pre.shiki span.primary {
+  color: var(--color-cat-maroon)
+}
+
+pre.shiki span.tag.doctype {
+  color: var(--color-cat-mauve)
+}
+
+pre.shiki span.string.doc {
+  color: var(--color-cat-teal)
+}
+
+pre.shiki span.title {
+  color: var(--color-cat-text)
+}
+
+pre.shiki span.variant {
+  color: var(--color-cat-red)
+}
