@@ -61,8 +61,6 @@
     margin: 0
 
   .shiki, .shiki span
-    background-color: transparent !important
-
     +theme_light()
       color: var(--shiki-light)
     +theme_dark()
@@ -99,41 +97,41 @@
 
     .diff.remove
       +theme_light()
-        background-color: rgba(244, 63, 94, .12) !important
+        background-color: rgba(244, 63, 94, .12)
       +theme_dark()
-        background-color: rgba(244, 63, 94, .24) !important
+        background-color: rgba(244, 63, 94, .24)
 
       &:before
         content: '-';
         +theme_light()
-          color: rgb(244, 63, 94) !important
+          color: rgb(244, 63, 94)
         +theme_dark()
-          color: #a91e3a !important
+          color: #a91e3a
 
     .diff.add
       +theme_light()
-        background-color: rgba(16, 185, 129, .08) !important
+        background-color: rgba(16, 185, 129, .08)
       +theme_dark()
-        background-color: rgba(16, 185, 129, .16) !important
+        background-color: rgba(16, 185, 129, .16)
 
       &:before
         content: '+';
         +theme_light()
-          color: rgb(16, 185, 129) !important
+          color: rgb(16, 185, 129)
         +theme_dark()
-          color: #1a7854 !important
+          color: #1a7854
 
     .highlighted
       +theme_light()
-        background-color: rgba($theme-color-hint, 0.1) !important
+        background-color: rgba($theme-color-hint, 0.1)
       +theme_dark()
-        background-color: rgba($theme-color-hint, 0.3) !important
+        background-color: rgba($theme-color-hint, 0.3)
 
     .highlighted-word
       +theme_light()
-        background-color: rgba($theme-color-hint, 0.1) !important
+        background-color: rgba($theme-color-hint, 0.1)
       +theme_dark()
-        background-color: rgba($theme-color-hint, 0.7) !important
+        background-color: rgba($theme-color-hint, 0.7)
 
     &.has-focused
       .line
