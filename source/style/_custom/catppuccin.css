@@ -1,78 +1,58 @@
 :root,
 :host {
-  --color-cat-rosewater: light-dark(rgb(var(--color-cat-latte-rosewater)), rgb(var(--color-cat-frappe-rosewater)));
-  --color-cat-flamingo: light-dark(rgb(var(--color-cat-latte-flamingo)), rgb(var(--color-cat-frappe-flamingo)));
-  --color-cat-pink: light-dark(rgb(var(--color-cat-latte-pink)), rgb(var(--color-cat-frappe-pink)));
-  --color-cat-mauve: light-dark(rgb(var(--color-cat-latte-mauve)), rgb(var(--color-cat-frappe-mauve)));
-  --color-cat-red: light-dark(rgb(var(--color-cat-latte-red)), rgb(var(--color-cat-frappe-red)));
-  --color-cat-maroon: light-dark(rgb(var(--color-cat-latte-maroon)), rgb(var(--color-cat-frappe-maroon)));
-  --color-cat-peach: light-dark(rgb(var(--color-cat-latte-peach)), rgb(var(--color-cat-frappe-peach)));
-  --color-cat-yellow: light-dark(rgb(var(--color-cat-latte-yellow)), rgb(var(--color-cat-frappe-yellow)));
-  --color-cat-green: light-dark(rgb(var(--color-cat-latte-green)), rgb(var(--color-cat-frappe-green)));
-  --color-cat-teal: light-dark(rgb(var(--color-cat-latte-teal)), rgb(var(--color-cat-frappe-teal)));
-  --color-cat-sky: light-dark(rgb(var(--color-cat-latte-sky)), rgb(var(--color-cat-frappe-sky)));
-  --color-cat-sapphire: light-dark(rgb(var(--color-cat-latte-sapphire)), rgb(var(--color-cat-frappe-sapphire)));
-  --color-cat-blue: light-dark(rgb(var(--color-cat-latte-blue)), rgb(var(--color-cat-frappe-blue)));
-  --color-cat-lavender: light-dark(rgb(var(--color-cat-latte-lavender)), rgb(var(--color-cat-frappe-lavender)));
-  --color-cat-text: light-dark(rgb(var(--color-cat-latte-text)), rgb(var(--color-cat-frappe-text)));
-  --color-cat-subtext1: light-dark(rgb(var(--color-cat-latte-subtext1)), rgb(var(--color-cat-frappe-subtext1)));
-  --color-cat-overlay2: light-dark(rgb(var(--color-cat-latte-overlay2)), rgb(var(--color-cat-frappe-overlay2)));
-  --color-cat-overlay1: light-dark(rgb(var(--color-cat-latte-overlay1)), rgb(var(--color-cat-frappe-overlay1)));
-  --color-cat-overlay0: light-dark(rgb(var(--color-cat-latte-overlay0)), rgb(var(--color-cat-frappe-overlay0)));
-  --color-cat-surface2: light-dark(rgb(var(--color-cat-latte-surface2)), rgb(var(--color-cat-frappe-surface2)));
-  --color-cat-base: light-dark(rgb(var(--color-cat-latte-base)), rgb(var(--color-cat-frappe-base)));
-  --color-cat-latte-rosewater: 220, 138, 120;
-  --color-cat-latte-flamingo: 221, 120, 120;
-  --color-cat-latte-pink: 234, 118, 203;
-  --color-cat-latte-mauve: 136, 57, 239;
-  --color-cat-latte-red: 210, 15, 57;
-  --color-cat-latte-maroon: 230, 69, 83;
-  --color-cat-latte-peach: 254, 100, 11;
-  --color-cat-latte-yellow: 223, 142, 29;
-  --color-cat-latte-green: 64, 160, 43;
-  --color-cat-latte-teal: 23, 146, 153;
-  --color-cat-latte-sky: 4, 165, 229;
-  --color-cat-latte-sapphire: 32, 159, 181;
-  --color-cat-latte-blue: 30, 102, 245;
-  --color-cat-latte-lavender: 114, 135, 253;
-  --color-cat-latte-text: 76, 79, 105;
-  --color-cat-latte-subtext1: 92, 95, 119;
-  --color-cat-latte-subtext0: 108, 111, 133;
-  --color-cat-latte-overlay2: 124, 127, 147;
-  --color-cat-latte-overlay1: 140, 143, 161;
-  --color-cat-latte-overlay0: 156, 160, 176;
-  --color-cat-latte-surface2: 172, 176, 190;
-  --color-cat-latte-surface1: 188, 192, 204;
-  --color-cat-latte-surface0: 204, 208, 218;
-  --color-cat-latte-base: 239, 241, 245;
-  --color-cat-latte-mantle: 230, 233, 239;
-  --color-cat-latte-crust: 220, 224, 232;
-  --color-cat-frappe-rosewater: 242, 213, 207;
-  --color-cat-frappe-flamingo: 238, 190, 190;
-  --color-cat-frappe-pink: 244, 184, 228;
-  --color-cat-frappe-mauve: 202, 158, 230;
-  --color-cat-frappe-red: 231, 130, 132;
-  --color-cat-frappe-maroon: 234, 153, 156;
-  --color-cat-frappe-peach: 239, 159, 118;
-  --color-cat-frappe-yellow: 229, 200, 144;
-  --color-cat-frappe-green: 166, 209, 137;
-  --color-cat-frappe-teal: 129, 200, 190;
-  --color-cat-frappe-sky: 153, 209, 219;
-  --color-cat-frappe-sapphire: 133, 193, 220;
-  --color-cat-frappe-blue: 140, 170, 238;
-  --color-cat-frappe-lavender: 186, 187, 241;
-  --color-cat-frappe-text: 198, 208, 245;
-  --color-cat-frappe-subtext1: 181, 191, 226;
-  --color-cat-frappe-subtext0: 165, 173, 206;
-  --color-cat-frappe-overlay2: 148, 156, 187;
-  --color-cat-frappe-overlay1: 131, 139, 167;
-  --color-cat-frappe-overlay0: 115, 121, 148;
-  --color-cat-frappe-surface2: 98, 104, 128;
-  --color-cat-frappe-surface1: 81, 87, 109;
-  --color-cat-frappe-surface0: 65, 69, 89;
-  --color-cat-frappe-base: 48, 52, 70;
-  --color-cat-frappe-mantle: 41, 44, 60;
-  --color-cat-frappe-crust: 35, 38, 52;
+  color-scheme: light dark;
+  --color-cat-pink: light-dark(rgb(var(--color-light-pink)), rgb(var(--color-dark-pink)));
+  --color-cat-magenta: light-dark(rgb(var(--color-light-magenta)), rgb(var(--color-dark-magenta)));
+  --color-cat-purple: light-dark(rgb(var(--color-light-purple)), rgb(var(--color-dark-purple)));
+  --color-cat-red: light-dark(rgb(var(--color-light-red)), rgb(var(--color-dark-red)));
+  --color-cat-yellow: light-dark(rgb(var(--color-light-yellow)), rgb(var(--color-dark-yellow)));
+  --color-cat-orange: light-dark(rgb(var(--color-light-orange)), rgb(var(--color-dark-orange)));
+  --color-cat-green: light-dark(rgb(var(--color-light-green)), rgb(var(--color-dark-green)));
+  --color-cat-cyan: light-dark(rgb(var(--color-light-cyan)), rgb(var(--color-dark-cyan)));
+  --color-cat-blue: light-dark(rgb(var(--color-light-blue)), rgb(var(--color-dark-blue)));
+  --color-cat-text: light-dark(rgb(var(--color-light-text)), rgb(var(--color-dark-text)));
+  --color-cat-subtext1: light-dark(rgb(var(--color-light-subtext1)), rgb(var(--color-dark-subtext1)));
+  --color-cat-overlay2: light-dark(rgb(var(--color-light-overlay2)), rgb(var(--color-dark-overlay2)));
+  --color-cat-overlay1: light-dark(rgb(var(--color-light-overlay1)), rgb(var(--color-dark-overlay1)));
+  --color-cat-overlay0: light-dark(rgb(var(--color-light-overlay0)), rgb(var(--color-dark-overlay0)));
+  --color-cat-surface2: light-dark(rgb(var(--color-light-surface2)), rgb(var(--color-dark-surface2)));
+  --color-cat-base: light-dark(rgb(var(--color-light-base)), rgb(var(--color-dark-base)));
+
+  /* Snazzy Light colors */
+  --color-light-pink: 247, 103, 187;
+  --color-light-magenta: 194, 81, 147;
+  --color-light-purple: 17, 101, 143;
+  --color-light-red: 255, 92, 87;
+  --color-light-yellow: 207, 156, 0;
+  --color-light-orange: 245, 185, 0;
+  --color-light-green: 45, 174, 88;
+  --color-light-cyan: 19, 187, 183;
+  --color-light-blue: 9, 161, 237;
+  --color-light-text: 86, 88, 105;
+  --color-light-subtext1: 117, 121, 143;
+  --color-light-overlay2: 145, 148, 162;
+  --color-light-overlay1: 173, 177, 194;
+  --color-light-overlay0: 222, 223, 224;
+  --color-light-surface2: 233, 234, 235;
+  --color-light-base: 250, 251, 252;
+
+  /* LaserWave Dark colors */
+  --color-dark-pink: 235, 100, 185;
+  --color-dark-magenta: 150, 108, 192;
+  --color-dark-purple: 179, 129, 197;
+  --color-dark-red: 255, 62, 123;
+  --color-dark-yellow: 255, 226, 97;
+  --color-dark-orange: 255, 184, 91;
+  --color-dark-green: 116, 223, 196;
+  --color-dark-cyan: 180, 220, 231;
+  --color-dark-blue: 64, 180, 196;
+  --color-dark-text: 255, 255, 255;
+  --color-dark-subtext1: 221, 221, 221;
+  --color-dark-overlay2: 145, 136, 155;
+  --color-dark-overlay1: 58, 50, 66;
+  --color-dark-overlay0: 62, 53, 73;
+  --color-dark-surface2: 36, 32, 41;
+  --color-dark-base: 39, 33, 46;
 }
 
 pre.shiki span.variable:not(.space) {
@@ -80,11 +60,11 @@ pre.shiki span.variable:not(.space) {
 }
 
 pre.shiki span.variable.builtin:not(.space) {
-  color: var(--color-cat-red)
+  color: var(--color-cat-yellow)
 }
 
 pre.shiki span.variable.parameter:not(.space) {
-  color: var(--color-cat-maroon)
+  color: var(--color-cat-text)
 }
 
 pre.shiki span.variable.member:not(.space) {
@@ -92,94 +72,94 @@ pre.shiki span.variable.member:not(.space) {
 }
 
 pre.shiki span.variable.special:not(.space) {
-  color: var(--color-cat-red)
+  color: var(--color-cat-yellow)
 }
 
 pre.shiki span.constant:not(.space),
 pre.shiki span.constant.builtin:not(.space) {
-  color: var(--color-cat-peach)
-}
-
-pre.shiki span.constant.macro:not(.space) {
-  color: var(--color-cat-mauve)
-}
-
-pre.shiki span.module:not(.space) {
-  color: var(--color-cat-yellow)
-}
-
-pre.shiki span.label:not(.space) {
-  color: var(--color-cat-sapphire)
-}
-
-pre.shiki span.string:not(.space) {
   color: var(--color-cat-green)
 }
 
+pre.shiki span.constant.macro:not(.space) {
+  color: var(--color-cat-pink)
+}
+
+pre.shiki span.module:not(.space) {
+  color: var(--color-cat-cyan)
+}
+
+pre.shiki span.label:not(.space) {
+  color: var(--color-cat-blue)
+}
+
+pre.shiki span.string:not(.space) {
+  color: var(--color-cat-cyan)
+}
+
 pre.shiki span.string.documentation:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.string.regexp:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-orange)
 }
 
 pre.shiki span.string.escape:not(.space),
 pre.shiki span.string.special:not(.space),
 pre.shiki span.string.special.path:not(.space) {
-  color: var(--color-cat-pink)
+  color: var(--color-cat-orange)
 }
 
 pre.shiki span.string.special.symbol:not(.space) {
-  color: var(--color-cat-flamingo)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.string.special.url:not(.space) {
-  color: var(--color-cat-rosewater)
+  color: var(--color-cat-blue)
 }
 
 pre.shiki span.character:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.character.special:not(.space) {
-  color: var(--color-cat-pink)
+  color: var(--color-cat-orange)
 }
 
 pre.shiki span.boolean:not(.space),
 pre.shiki span.number:not(.space),
 pre.shiki span.number.float:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-purple)
 }
 
 pre.shiki span.tag:not(.space) {
-  color: var(--color-cat-blue)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.tag.attribute:not(.space) {
-  color: var(--color-cat-yellow)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.tag.delimiter:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-overlay2)
 }
 
 pre.shiki span.type:not(.space) {
-  color: var(--color-cat-yellow)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.type.builtin:not(.space) {
-  color: var(--color-cat-mauve)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.type.definition:not(.space),
 pre.shiki span.type.interface:not(.space),
 pre.shiki span.type.super:not(.space) {
-  color: var(--color-cat-yellow)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.attribute:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.property:not(.space),
@@ -188,15 +168,15 @@ pre.shiki span.function:not(.space) {
 }
 
 pre.shiki span.function.builtin:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.function.call:not(.space) {
-  color: var(--color-cat-blue)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.function.macro:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.function.method:not(.space),
@@ -205,11 +185,11 @@ pre.shiki span.function.method.call:not(.space) {
 }
 
 pre.shiki span.constructor:not(.space) {
-  color: var(--color-cat-flamingo)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.operator:not(.space) {
-  color: var(--color-cat-sky)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.keyword:not(.space),
@@ -225,16 +205,16 @@ pre.shiki span.keyword.debug:not(.space),
 pre.shiki span.keyword.exception:not(.space),
 pre.shiki span.keyword.conditional:not(.space),
 pre.shiki span.keyword.conditional.ternary:not(.space) {
-  color: var(--color-cat-mauve)
+  color: var(--color-cat-blue)
 }
 
 pre.shiki span.keyword.directive:not(.space),
 pre.shiki span.keyword.directive.define:not(.space) {
-  color: var(--color-cat-pink)
+  color: var(--color-cat-purple)
 }
 
 pre.shiki span.keyword.export:not(.space) {
-  color: var(--color-cat-sky)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.punctuation:not(.space),
@@ -248,11 +228,11 @@ pre.shiki span.punctuation.special:not(.space) {
 }
 
 pre.shiki span.punctuation.special.symbol:not(.space) {
-  color: var(--color-cat-flamingo)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.punctuation.list_marker:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.comment:not(.space),
@@ -262,7 +242,7 @@ pre.shiki span.comment.documentation:not(.space) {
 }
 
 pre.shiki span.comment.info:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.comment.error:not(.space) {
@@ -279,11 +259,11 @@ pre.shiki span.comment.hint:not(.space) {
 }
 
 pre.shiki span.comment.todo:not(.space) {
-  color: var(--color-cat-flamingo)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.comment.note:not(.space) {
-  color: var(--color-cat-rosewater)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.diff.plus:not(.space) {
@@ -291,23 +271,23 @@ pre.shiki span.diff.plus:not(.space) {
 }
 
 pre.shiki span.diff.minus:not(.space) {
-  color: var(--color-cat-red)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.parameter:not(.space) {
-  color: var(--color-cat-maroon)
+  color: var(--color-cat-text)
 }
 
 pre.shiki span.field:not(.space) {
-  color: var(--color-cat-lavender)
+  color: var(--color-cat-blue)
 }
 
 pre.shiki span.namespace:not(.space) {
-  color: var(--color-cat-yellow)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.float:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-purple)
 }
 
 pre.shiki span.symbol:not(.space) {
@@ -315,7 +295,7 @@ pre.shiki span.symbol:not(.space) {
 }
 
 pre.shiki span.string.regex:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-orange)
 }
 
 pre.shiki span.text:not(.space) {
@@ -325,27 +305,27 @@ pre.shiki span.text:not(.space) {
 pre.shiki span.emphasis.strong:not(.space),
 pre.shiki span.emphasis:not(.space),
 pre.shiki span.embedded:not(.space) {
-  color: var(--color-cat-maroon)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.text.literal:not(.space) {
-  color: var(--color-cat-green)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.concept:not(.space) {
-  color: var(--color-cat-sapphire)
+  color: var(--color-cat-blue)
 }
 
 pre.shiki span.enum:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.function.decorator:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-purple)
 }
 
 pre.shiki span.type.class.definition:not(.space) {
-  color: var(--color-cat-yellow)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.hint:not(.space) {
@@ -353,15 +333,15 @@ pre.shiki span.hint:not(.space) {
 }
 
 pre.shiki span.link_text:not(.space) {
-  color: var(--color-cat-lavender)
-}
-
-pre.shiki span.link_uri:not(.space) {
   color: var(--color-cat-blue)
 }
 
+pre.shiki span.link_uri:not(.space) {
+  color: var(--color-cat-cyan)
+}
+
 pre.shiki span.parent:not(.space) {
-  color: var(--color-cat-peach)
+  color: var(--color-cat-green)
 }
 
 pre.shiki span.predictive:not(.space) {
@@ -373,15 +353,15 @@ pre.shiki span.predoc:not(.space) {
 }
 
 pre.shiki span.primary:not(.space) {
-  color: var(--color-cat-maroon)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.tag.doctype:not(.space) {
-  color: var(--color-cat-mauve)
+  color: var(--color-cat-pink)
 }
 
 pre.shiki span.string.doc:not(.space) {
-  color: var(--color-cat-teal)
+  color: var(--color-cat-cyan)
 }
 
 pre.shiki span.title:not(.space) {
