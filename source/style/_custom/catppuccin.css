@@ -75,319 +75,319 @@
   --color-cat-frappe-crust: 35, 38, 52;
 }
 
-pre.shiki span.variable {
+pre.shiki span.variable:not(.space) {
   color: var(--color-cat-text)
 }
 
-pre.shiki span.variable.builtin {
+pre.shiki span.variable.builtin:not(.space) {
   color: var(--color-cat-red)
 }
 
-pre.shiki span.variable.parameter {
+pre.shiki span.variable.parameter:not(.space) {
   color: var(--color-cat-maroon)
 }
 
-pre.shiki span.variable.member {
+pre.shiki span.variable.member:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.variable.special {
+pre.shiki span.variable.special:not(.space) {
   color: var(--color-cat-red)
 }
 
-pre.shiki span.constant,
-pre.shiki span.constant.builtin {
+pre.shiki span.constant:not(.space),
+pre.shiki span.constant.builtin:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.constant.macro {
+pre.shiki span.constant.macro:not(.space) {
   color: var(--color-cat-mauve)
 }
 
-pre.shiki span.module {
+pre.shiki span.module:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.label {
+pre.shiki span.label:not(.space) {
   color: var(--color-cat-sapphire)
 }
 
-pre.shiki span.string {
+pre.shiki span.string:not(.space) {
   color: var(--color-cat-green)
 }
 
-pre.shiki span.string.documentation {
+pre.shiki span.string.documentation:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.string.regexp {
+pre.shiki span.string.regexp:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.string.escape,
-pre.shiki span.string.special,
-pre.shiki span.string.special.path {
+pre.shiki span.string.escape:not(.space),
+pre.shiki span.string.special:not(.space),
+pre.shiki span.string.special.path:not(.space) {
   color: var(--color-cat-pink)
 }
 
-pre.shiki span.string.special.symbol {
+pre.shiki span.string.special.symbol:not(.space) {
   color: var(--color-cat-flamingo)
 }
 
-pre.shiki span.string.special.url {
+pre.shiki span.string.special.url:not(.space) {
   color: var(--color-cat-rosewater)
 }
 
-pre.shiki span.character {
+pre.shiki span.character:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.character.special {
+pre.shiki span.character.special:not(.space) {
   color: var(--color-cat-pink)
 }
 
-pre.shiki span.boolean,
-pre.shiki span.number,
-pre.shiki span.number.float {
+pre.shiki span.boolean:not(.space),
+pre.shiki span.number:not(.space),
+pre.shiki span.number.float:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.tag {
+pre.shiki span.tag:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.tag.attribute {
+pre.shiki span.tag.attribute:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.tag.delimiter {
+pre.shiki span.tag.delimiter:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.type {
+pre.shiki span.type:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.type.builtin {
+pre.shiki span.type.builtin:not(.space) {
   color: var(--color-cat-mauve)
 }
 
-pre.shiki span.type.definition,
-pre.shiki span.type.interface,
-pre.shiki span.type.super {
+pre.shiki span.type.definition:not(.space),
+pre.shiki span.type.interface:not(.space),
+pre.shiki span.type.super:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.attribute {
+pre.shiki span.attribute:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.property,
-pre.shiki span.function {
+pre.shiki span.property:not(.space),
+pre.shiki span.function:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.function.builtin {
+pre.shiki span.function.builtin:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.function.call {
+pre.shiki span.function.call:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.function.macro {
+pre.shiki span.function.macro:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.function.method,
-pre.shiki span.function.method.call {
+pre.shiki span.function.method:not(.space),
+pre.shiki span.function.method.call:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.constructor {
+pre.shiki span.constructor:not(.space) {
   color: var(--color-cat-flamingo)
 }
 
-pre.shiki span.operator {
+pre.shiki span.operator:not(.space) {
   color: var(--color-cat-sky)
 }
 
-pre.shiki span.keyword,
-pre.shiki span.keyword.modifier,
-pre.shiki span.keyword.type,
-pre.shiki span.keyword.coroutine,
-pre.shiki span.keyword.function,
-pre.shiki span.keyword.operator,
-pre.shiki span.keyword.import,
-pre.shiki span.keyword.repeat,
-pre.shiki span.keyword.return,
-pre.shiki span.keyword.debug,
-pre.shiki span.keyword.exception,
-pre.shiki span.keyword.conditional,
-pre.shiki span.keyword.conditional.ternary {
+pre.shiki span.keyword:not(.space),
+pre.shiki span.keyword.modifier:not(.space),
+pre.shiki span.keyword.type:not(.space),
+pre.shiki span.keyword.coroutine:not(.space),
+pre.shiki span.keyword.function:not(.space),
+pre.shiki span.keyword.operator:not(.space),
+pre.shiki span.keyword.import:not(.space),
+pre.shiki span.keyword.repeat:not(.space),
+pre.shiki span.keyword.return:not(.space),
+pre.shiki span.keyword.debug:not(.space),
+pre.shiki span.keyword.exception:not(.space),
+pre.shiki span.keyword.conditional:not(.space),
+pre.shiki span.keyword.conditional.ternary:not(.space) {
   color: var(--color-cat-mauve)
 }
 
-pre.shiki span.keyword.directive,
-pre.shiki span.keyword.directive.define {
+pre.shiki span.keyword.directive:not(.space),
+pre.shiki span.keyword.directive.define:not(.space) {
   color: var(--color-cat-pink)
 }
 
-pre.shiki span.keyword.export {
+pre.shiki span.keyword.export:not(.space) {
   color: var(--color-cat-sky)
 }
 
-pre.shiki span.punctuation,
-pre.shiki span.punctuation.delimiter,
-pre.shiki span.punctuation.bracket {
+pre.shiki span.punctuation:not(.space),
+pre.shiki span.punctuation.delimiter:not(.space),
+pre.shiki span.punctuation.bracket:not(.space) {
   color: var(--color-cat-overlay2)
 }
 
-pre.shiki span.punctuation.special {
+pre.shiki span.punctuation.special:not(.space) {
   color: var(--color-cat-pink)
 }
 
-pre.shiki span.punctuation.special.symbol {
+pre.shiki span.punctuation.special.symbol:not(.space) {
   color: var(--color-cat-flamingo)
 }
 
-pre.shiki span.punctuation.list_marker {
+pre.shiki span.punctuation.list_marker:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.comment,
-pre.shiki span.comment.doc,
-pre.shiki span.comment.documentation {
+pre.shiki span.comment:not(.space),
+pre.shiki span.comment.doc:not(.space),
+pre.shiki span.comment.documentation:not(.space) {
   color: var(--color-cat-overlay2)
 }
 
-pre.shiki span.comment.info {
+pre.shiki span.comment.info:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.comment.error {
+pre.shiki span.comment.error:not(.space) {
   color: var(--color-cat-red)
 }
 
-pre.shiki span.comment.warning,
-pre.shiki span.comment.warn {
+pre.shiki span.comment.warning:not(.space),
+pre.shiki span.comment.warn:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.comment.hint {
+pre.shiki span.comment.hint:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.comment.todo {
+pre.shiki span.comment.todo:not(.space) {
   color: var(--color-cat-flamingo)
 }
 
-pre.shiki span.comment.note {
+pre.shiki span.comment.note:not(.space) {
   color: var(--color-cat-rosewater)
 }
 
-pre.shiki span.diff.plus {
+pre.shiki span.diff.plus:not(.space) {
   color: var(--color-cat-green)
 }
 
-pre.shiki span.diff.minus {
+pre.shiki span.diff.minus:not(.space) {
   color: var(--color-cat-red)
 }
 
-pre.shiki span.parameter {
+pre.shiki span.parameter:not(.space) {
   color: var(--color-cat-maroon)
 }
 
-pre.shiki span.field {
+pre.shiki span.field:not(.space) {
   color: var(--color-cat-lavender)
 }
 
-pre.shiki span.namespace {
+pre.shiki span.namespace:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.float {
+pre.shiki span.float:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.symbol {
+pre.shiki span.symbol:not(.space) {
   color: var(--color-cat-pink)
 }
 
-pre.shiki span.string.regex {
+pre.shiki span.string.regex:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.text {
+pre.shiki span.text:not(.space) {
   color: var(--color-cat-text)
 }
 
-pre.shiki span.emphasis.strong,
-pre.shiki span.emphasis,
-pre.shiki span.embedded {
+pre.shiki span.emphasis.strong:not(.space),
+pre.shiki span.emphasis:not(.space),
+pre.shiki span.embedded:not(.space) {
   color: var(--color-cat-maroon)
 }
 
-pre.shiki span.text.literal {
+pre.shiki span.text.literal:not(.space) {
   color: var(--color-cat-green)
 }
 
-pre.shiki span.concept {
+pre.shiki span.concept:not(.space) {
   color: var(--color-cat-sapphire)
 }
 
-pre.shiki span.enum {
+pre.shiki span.enum:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.function.decorator {
+pre.shiki span.function.decorator:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.type.class.definition {
+pre.shiki span.type.class.definition:not(.space) {
   color: var(--color-cat-yellow)
 }
 
-pre.shiki span.hint {
+pre.shiki span.hint:not(.space) {
   color: var(--color-cat-overlay1)
 }
 
-pre.shiki span.link_text {
+pre.shiki span.link_text:not(.space) {
   color: var(--color-cat-lavender)
 }
 
-pre.shiki span.link_uri {
+pre.shiki span.link_uri:not(.space) {
   color: var(--color-cat-blue)
 }
 
-pre.shiki span.parent {
+pre.shiki span.parent:not(.space) {
   color: var(--color-cat-peach)
 }
 
-pre.shiki span.predictive {
+pre.shiki span.predictive:not(.space) {
   color: var(--color-cat-overlay0)
 }
 
-pre.shiki span.predoc {
+pre.shiki span.predoc:not(.space) {
   color: var(--color-cat-red)
 }
 
-pre.shiki span.primary {
+pre.shiki span.primary:not(.space) {
   color: var(--color-cat-maroon)
 }
 
-pre.shiki span.tag.doctype {
+pre.shiki span.tag.doctype:not(.space) {
   color: var(--color-cat-mauve)
 }
 
-pre.shiki span.string.doc {
+pre.shiki span.string.doc:not(.space) {
   color: var(--color-cat-teal)
 }
 
-pre.shiki span.title {
+pre.shiki span.title:not(.space) {
   color: var(--color-cat-text)
 }
 
-pre.shiki span.variant {
+pre.shiki span.variant:not(.space) {
   color: var(--color-cat-red)
 }
