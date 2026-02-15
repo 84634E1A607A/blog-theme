@@ -1,5 +1,5 @@
-import { fromEvent, from, zip } from 'rxjs'
-import { map, switchMap, filter } from 'rxjs/operators'
+import { fromEvent } from 'rxjs'
+import { map } from 'rxjs/operators'
 import genSearch from './search'
 
 class Base {
@@ -7,15 +7,61 @@ class Base {
     this.config = config
     this.theme = config.theme
     this.scrollArr = []
+    this.boundHandlers = new WeakMap()
+  }
+
+  static toArray(nodes) {
+    return Array.from(nodes || [])
+  }
+
+  static scrollTop() {
+    return window.scrollY || document.documentElement.scrollTop || 0
+  }
+
+  static viewportHeight() {
+    return window.innerHeight || document.documentElement.clientHeight || 0
+  }
+
+  static documentHeight() {
+    const { body, documentElement } = document
+    return Math.max(
+      body ? body.scrollHeight : 0,
+      body ? body.offsetHeight : 0,
+      documentElement ? documentElement.clientHeight : 0,
+      documentElement ? documentElement.scrollHeight : 0,
+      documentElement ? documentElement.offsetHeight : 0
+    )
+  }
+
+  bind(el, eventName, key, handler) {
+    if (!el) return
+
+    const handlers = this.boundHandlers.get(el) || {}
+    const prev = handlers[key]
+    if (prev) {
+      el.removeEventListener(eventName, prev)
+    }
+
+    el.addEventListener(eventName, handler)
+    handlers[key] = handler
+    this.boundHandlers.set(el, handlers)
   }
 
   animate(selector, animation, callback) {
-    const $el = $(selector)
-    $el.addClass(animation)
-      .one('webkitAnimationEnd AnimationEnd', function () {
-        $el.removeClass(animation)
-        callback && callback()
-      })
+    const element = document.querySelector(selector)
+    if (!element) {
+      if (callback) callback()
+      return
+    }
+
+    element.classList.add(animation)
+    const onEnd = () => {
+      element.classList.remove(animation)
+      element.removeEventListener('animationend', onEnd)
+      if (callback) callback()
+    }
+
+    element.addEventListener('animationend', onEnd)
   }
 
   init() {
@@ -26,128 +72,155 @@ class Base {
   }
 
   smoothScroll() {
-    $('.toc-link').on('click', function (e) {
-      e.preventDefault()
-      const href = $.attr(this, 'href')
+    Base.toArray(document.querySelectorAll('.toc-link')).forEach(link => {
+      this.bind(link, 'click', 'toc-click', e => {
+        e.preventDefault()
+        const href = link.getAttribute('href')
+        if (!href) return
 
-      // Handle URL-encoded hrefs (e.g., Chinese characters)
-      try {
-        // Remove the # and decode the ID
-        const targetId = decodeURIComponent(href.substring(1))
-        const target = document.getElementById(targetId)
-
-        if (target) {
-          $('html, body').animate({
-            scrollTop: $(target).offset().top - 200
-          })
+        const url = new URL(href, window.location.href)
+        if (url.pathname !== window.location.pathname) {
+          window.location.href = url.toString()
+          return
         }
-      } catch (err) {
-        // Fallback to original behavior for simple hrefs
+
+        const encodedId = url.hash.replace(/^#/, '')
+        if (!encodedId) return
+
+        let decodedId = encodedId
         try {
-          const target = $(href)
-          if (target.length) {
-            $('html, body').animate({
-              scrollTop: target.offset().top - 200
-            })
-          }
-        } catch (e) {
-          console.warn('Failed to scroll to target:', href)
-        }
-      }
-    })
-  }
-
-  setupPictures() {
-    $('.post-content').each((_, postContent) => {
-      $(postContent).find('img').each((_, img) => {
-        const $img = $(img)
-        const src = img.src
-        const alt = img.alt || ''
-        const className = img.className || ''
-
-        $img.parent('p').css('text-align', 'center')
-
-        if (this.theme.lazy) {
-          $img.attr('data-src', src)
-            .removeAttr('src')
-            .addClass('lazyload')
+          decodedId = decodeURIComponent(encodedId)
+        } catch (_) {
+          decodedId = encodedId
         }
 
-        $img.wrap(
-          $('<a>')
-            .attr({ href: src, 'data-title': alt, 'data-lightbox': 'group' })
-            .addClass(className)
-        )
+        const safeQueryId = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(decodedId) : decodedId.replace(/["\\]/g, '\\$&')
+        const target = document.getElementById(decodedId) ||
+          document.getElementById(encodedId) ||
+          document.querySelector(`[id="${safeQueryId}"]`)
+        if (!target) {
+          window.location.hash = encodedId
+          return
+        }
+
+        const top = target.getBoundingClientRect().top + Base.scrollTop() - 200
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+        history.replaceState(null, '', `#${encodedId}`)
       })
     })
   }
 
-  showComments() {
-    const $comments = $('#post-comments')
-    const $switch = $('#com-switch')
+  setupPictures() {
+    Base.toArray(document.querySelectorAll('.post-content img')).forEach(img => {
+      const src = img.getAttribute('src') || img.src
+      if (!src) return
 
-    // Check if elements exist
-    if (!$comments.length || !$switch.length) return
+      const alt = img.getAttribute('alt') || ''
+      const className = img.className || ''
+      const parent = img.parentElement
 
-    // Remove old handler to prevent duplicates
-    $switch.off('click.comments')
-    $switch.on('click.comments', () => {
-      const isHidden = $comments.css('display') === 'none'
+      if (parent && parent.tagName === 'P') {
+        parent.style.textAlign = 'center'
+      }
 
-      if (isHidden) {
-        $comments.css('display', 'block').addClass('syuanpi fadeInDown')
-        $switch.css('transform', 'rotate(180deg)')
-      } else {
-        $switch.addClass('syuanpi').css('transform', '')
-        $comments.removeClass('fadeInDown')
-        this.animate('#post-comments', 'fadeOutUp', () => {
-          $comments.css('display', 'none')
-        })
+      if (this.theme.lazy) {
+        img.setAttribute('data-src', src)
+        img.removeAttribute('src')
+        img.classList.add('lazyload')
+      }
+
+      if (parent && parent.tagName === 'A') {
+        parent.setAttribute('href', src)
+        parent.setAttribute('data-title', alt)
+        parent.setAttribute('data-lightbox', 'group')
+        if (className) {
+          className.split(/\s+/).filter(Boolean).forEach(cls => parent.classList.add(cls))
+        }
+        return
+      }
+
+      const anchor = document.createElement('a')
+      anchor.setAttribute('href', src)
+      anchor.setAttribute('data-title', alt)
+      anchor.setAttribute('data-lightbox', 'group')
+      if (className) {
+        className.split(/\s+/).filter(Boolean).forEach(cls => anchor.classList.add(cls))
+      }
+
+      if (parent) {
+        parent.insertBefore(anchor, img)
+        anchor.appendChild(img)
       }
     })
   }
 
-  back2top() {
-    const $toTop = $('.toTop')
-    if (!$toTop.length) return
+  showComments() {
+    const comments = document.getElementById('post-comments')
+    const toggle = document.getElementById('com-switch')
+    if (!comments || !toggle) return
 
-    $toTop.off('click.back2top')
-    $toTop.on('click.back2top', () => {
-      $('html, body').animate({ scrollTop: 0 })
+    this.bind(toggle, 'click', 'comments-toggle', () => {
+      const isHidden = getComputedStyle(comments).display === 'none'
+
+      if (isHidden) {
+        comments.style.display = 'block'
+        comments.classList.add('syuanpi', 'fadeInDown')
+        toggle.style.transform = 'rotate(180deg)'
+        return
+      }
+
+      toggle.classList.add('syuanpi')
+      toggle.style.transform = ''
+      comments.classList.remove('fadeInDown')
+      this.animate('#post-comments', 'fadeOutUp', () => {
+        comments.style.display = 'none'
+      })
+    })
+  }
+
+  back2top() {
+    Base.toArray(document.querySelectorAll('.toTop')).forEach(button => {
+      this.bind(button, 'click', 'back2top', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      })
     })
   }
 
   pushHeader() {
-    const $header = $('#mobile-header')
+    const header = document.getElementById('mobile-header')
+    if (!header) return
+
     this.scrollArr.push(sct => {
-      $header.toggleClass('header-scroll', sct > 5)
+      header.classList.toggle('header-scroll', sct > 5)
     })
   }
 
   updateRound(sct) {
-    const scrollHeight = $(document).height() - $(window).height()
-    const scrollPercent = Math.floor((sct / scrollHeight) * 100)
-    $('#scrollpercent').html(scrollPercent)
+    const scrollHeight = Base.documentHeight() - Base.viewportHeight()
+    const scrollPercent = scrollHeight <= 0 ? 100 : Math.floor((sct / scrollHeight) * 100)
+    const indicator = document.getElementById('scrollpercent')
+    if (indicator) {
+      indicator.textContent = String(scrollPercent)
+    }
   }
 
   showToc() {
-    const $toclink = $('.toc-link')
-    const $headerlink = $('.headerlink')
+    const tocLinks = Base.toArray(document.querySelectorAll('.toc-link'))
+    const headerLinks = Base.toArray(document.querySelectorAll('.headerlink'))
+    const titleLinks = Base.toArray(document.querySelectorAll('.title-link a'))
 
     this.scrollArr.push(sct => {
-      const headerlinkTop = $headerlink.map((_, link) => $(link).offset().top).get()
+      const headerlinkTop = headerLinks.map(link => link.getBoundingClientRect().top + Base.scrollTop())
 
-      // Handle title link
-      $('.title-link a').toggleClass('active', sct >= 0 && sct < 230)
+      titleLinks.forEach(link => {
+        link.classList.toggle('active', sct >= 0 && sct < 230)
+      })
 
-      // Handle TOC links
-      $toclink.each((i, link) => {
-        const isLastOne = i + 1 === $toclink.length
+      tocLinks.forEach((link, i) => {
         const currentTop = headerlinkTop[i]
-        const nextTop = isLastOne ? Infinity : headerlinkTop[i + 1]
+        const nextTop = i + 1 === tocLinks.length ? Infinity : headerlinkTop[i + 1]
         const isActive = currentTop < sct + 210 && sct + 210 <= nextTop
-
-        $(link).toggleClass('active', isActive)
+        link.classList.toggle('active', isActive)
       })
     })
   }
@@ -157,8 +230,8 @@ class Base {
     let timer
 
     document.addEventListener('visibilitychange', () => {
-      const docHeight = $(document).height() - $(window).height()
-      let sct = docHeight === 0 ? 100 : Math.floor($(window).scrollTop() / docHeight * 100)
+      const docHeight = Base.documentHeight() - Base.viewportHeight()
+      const sct = docHeight <= 0 ? 100 : Math.floor((Base.scrollTop() / docHeight) * 100)
 
       if (document.hidden) {
         clearTimeout(timer)
@@ -175,208 +248,212 @@ class Base {
   showReward() {
     if (!this.theme.reward) return
 
-    const $wrapper = $('#reward-wrapper')
-    const $btn = $('#reward-btn')
+    const wrapper = document.getElementById('reward-wrapper')
+    const btn = document.getElementById('reward-btn')
+    if (!wrapper || !btn) return
 
-    // Check if elements exist
-    if (!$wrapper.length || !$btn.length) return
-
-    // Remove old handler to prevent duplicates
-    $btn.off('click.reward')
-    $btn.on('click.reward', () => {
-      const isHidden = $wrapper.css('display') === 'none'
+    this.bind(btn, 'click', 'reward-toggle', () => {
+      const isHidden = getComputedStyle(wrapper).display === 'none'
 
       if (isHidden) {
-        $wrapper.css('display', 'flex')
+        wrapper.style.display = 'flex'
         this.animate('#reward-btn', 'clarity')
-      } else {
-        this.animate('#reward-btn', 'melt', () => {
-          $wrapper.hide()
-        })
+        return
       }
+
+      this.animate('#reward-btn', 'melt', () => {
+        wrapper.style.display = 'none'
+      })
     })
   }
 
-  listenExit(elm, fn) {
-    // Check if element exists
-    if (!elm) return
+  listenExit(target, fn) {
+    if (!target) return
 
-    fromEvent(elm, 'keydown').pipe(
-      filter(e => e.keyCode === 27)
-    ).subscribe(() => fn())
+    if (target instanceof Element || target === document || target === window) {
+      this.bind(target, 'keydown', 'esc-close', e => {
+        if (e.key === 'Escape') fn()
+      })
+      return
+    }
+
+    Base.toArray(target).forEach(el => {
+      this.bind(el, 'keydown', 'esc-close', e => {
+        if (e.key === 'Escape') fn()
+      })
+    })
   }
 
   depth(open, close) {
-    const $body = $('body')
-    const $inner = $('.container-inner')
-    const isUnder = $body.hasClass('under')
+    const body = document.body
+    const inner = document.querySelector('.container-inner')
+    const isUnder = body.classList.contains('under')
 
     if (isUnder) {
-      $body.removeClass('under')
-      $inner.removeClass('under')
+      body.classList.remove('under')
+      if (inner) inner.classList.remove('under')
       close.call(this)
-    } else {
-      $body.addClass('under')
-      $inner.addClass('under')
-      open.call(this)
+      return
     }
+
+    body.classList.add('under')
+    if (inner) inner.classList.add('under')
+    open.call(this)
   }
 
   tagcloud() {
-    const $tag = $('#tags')
-    const $tagcloud = $('#tagcloud')
-    const $search = $('#search')
+    const tagBtn = document.getElementById('tags')
+    const tagcloud = document.getElementById('tagcloud')
+    const search = document.getElementById('search')
+
+    if (!tagBtn || !tagcloud) return
 
     const closeFrame = () => {
-      $tagcloud.removeClass('shuttleIn')
+      tagcloud.classList.remove('shuttleIn')
       this.animate('#tagcloud', 'zoomOut', () => {
-        $tagcloud.removeClass('syuanpi show')
+        tagcloud.classList.remove('syuanpi', 'show')
       })
     }
 
     const switchShow = () => {
       this.depth(
-        () => $tagcloud.addClass('syuanpi shuttleIn show'),
+        () => tagcloud.classList.add('syuanpi', 'shuttleIn', 'show'),
         closeFrame
       )
     }
 
-    this.listenExit($tag[0], switchShow)
+    this.listenExit(tagBtn, switchShow)
     this.listenExit(document.getElementsByClassName('tagcloud-taglist'), switchShow)
 
-    $tag.on('click', () => {
-      if ($search.hasClass('show')) {
-        $tagcloud.addClass('syuanpi shuttleIn show')
-        $search.removeClass('shuttleIn')
+    this.bind(tagBtn, 'click', 'tag-switch', () => {
+      if (search && search.classList.contains('show')) {
+        tagcloud.classList.add('syuanpi', 'shuttleIn', 'show')
+        search.classList.remove('shuttleIn')
         this.animate('#search', 'zoomOut', () => {
-          $search.removeClass('syuanpi show')
+          search.classList.remove('syuanpi', 'show')
         })
         return
       }
+
       switchShow()
     })
 
-    $('#tagcloud').on('click', e => {
+    this.bind(tagcloud, 'click', 'tagcloud-overlay', e => {
       e.stopPropagation()
       if (e.target.tagName === 'DIV') {
         this.depth(
-          () => $tagcloud.addClass('syuanpi shuttleIn show'),
+          () => tagcloud.classList.add('syuanpi', 'shuttleIn', 'show'),
           closeFrame
         )
       }
     })
 
-    const tags$ = fromEvent(document.querySelectorAll('.tagcloud-tag button'), 'click').pipe(
-      map(({ target }) => target)
-    )
-    const postlist$ = from(document.querySelectorAll('.tagcloud-postlist'))
-    const cleanlist$ = postlist$.pipe(map(dom => dom.classList.remove('active')))
-    const click$ = tags$.pipe(switchMap(() => cleanlist$))
-
-    zip(click$, tags$).pipe(
-      map(([_, dom]) => dom),
-      switchMap(v => postlist$.pipe(
-        filter(dom => dom.firstElementChild.innerHTML.trim() === v.innerHTML.trim())
-      ))
-    ).subscribe(v => v.classList.add('active'))
+    const tags = Base.toArray(document.querySelectorAll('.tagcloud-tag button'))
+    const postLists = Base.toArray(document.querySelectorAll('.tagcloud-postlist'))
+    tags.forEach(tag => {
+      this.bind(tag, 'click', `tag-item-${tag.textContent}`, () => {
+        postLists.forEach(list => list.classList.remove('active'))
+        const target = postLists.find(list => {
+          const firstChild = list.firstElementChild
+          return firstChild && firstChild.innerHTML.trim() === tag.innerHTML.trim()
+        })
+        if (target) target.classList.add('active')
+      })
+    })
   }
 
   search() {
     if (!this.theme.search) return
 
-    const $searchbtn = $('#search-btn')
-    const $result = $('#search-result')
-    const $search = $('#search')
-    const $tagcloud = $('#tagcloud')
+    const searchBtn = document.getElementById('search-btn')
+    const result = document.getElementById('search-result')
+    const search = document.getElementById('search')
+    const tagcloud = document.getElementById('tagcloud')
 
-    // Check if search element exists
-    if (!$search.length) return
+    if (!search || !searchBtn || !result) return
 
     const closeFrame = () => {
-      $search.removeClass('shuttleIn')
+      search.classList.remove('shuttleIn')
       this.animate('#search', 'zoomOut', () => {
-        $search.removeClass('syuanpi show')
+        search.classList.remove('syuanpi', 'show')
       })
     }
 
     const switchShow = () => {
       this.depth(
-        () => $search.addClass('syuanpi shuttleIn show'),
+        () => search.classList.add('syuanpi', 'shuttleIn', 'show'),
         closeFrame
       )
     }
 
-    const searchElement = document.getElementById('search')
-    if (searchElement) {
-      this.listenExit(searchElement, switchShow)
-    }
+    this.listenExit(search, switchShow)
 
-    // Remove old event handlers to prevent duplicates
-    $searchbtn.off('click.search')
-    $searchbtn.on('click.search', () => {
-      if ($tagcloud.hasClass('show')) {
-        $search.addClass('syuanpi shuttleIn show')
-        $tagcloud.removeClass('shuttleIn')
+    this.bind(searchBtn, 'click', 'search-toggle', () => {
+      if (tagcloud && tagcloud.classList.contains('show')) {
+        search.classList.add('syuanpi', 'shuttleIn', 'show')
+        tagcloud.classList.remove('shuttleIn')
         this.animate('#tagcloud', 'zoomOut', () => {
-          $tagcloud.removeClass('syuanpi show')
+          tagcloud.classList.remove('syuanpi', 'show')
         })
         return
       }
+
       switchShow()
     })
 
-    $('#search').off('click.search')
-    $('#search').on('click.search', e => {
+    this.bind(search, 'click', 'search-overlay', e => {
       e.stopPropagation()
       if (e.target.tagName === 'DIV') {
         this.depth(
-          () => $search.addClass('syuanpi shuttleIn show'),
+          () => search.classList.add('syuanpi', 'shuttleIn', 'show'),
           closeFrame
         )
       }
     })
 
-    genSearch(`${this.config.baseUrl}search.xml`, 'search-input')
-      .subscribe(vals => {
-        const list = body => `<ul class="search-result-list syuanpi fadeInUpShort">${body}</ul>`
-        const item = ({ url, title, content }) => `
+    genSearch(`${this.config.baseUrl}search.xml`, 'search-input').subscribe(vals => {
+      const list = body => `<ul class="search-result-list syuanpi fadeInUpShort">${body}</ul>`
+      const item = ({ url, title, content }) => `
           <li class="search-result-item">
             <a href="${url}"><h2>${title}</h2></a>
             <p>${content}</p>
           </li>
         `
-        const output = vals.map(item)
-        $result.html(list(output.join('')))
-      })
+      const output = vals.map(item)
+      result.innerHTML = list(output.join(''))
+    })
   }
 
   headerMenu() {
-    const $mobileMenu = $('.mobile-header-body')
-    const $headerLine = $('.header-menu-line')
-    const $mtag = $('#mobile-tags')
-    const $tagcloud = $('#tagcloud')
+    const mobileMenu = document.querySelector('.mobile-header-body')
+    const headerLine = document.querySelector('.header-menu-line')
+    const mobileTag = document.getElementById('mobile-tags')
+    const tagcloud = document.getElementById('tagcloud')
+    const mobileLeft = document.getElementById('mobile-left')
 
-    $mtag.on('click', () => {
-      $mobileMenu.removeClass('show')
-      $headerLine.removeClass('show')
-      $tagcloud.addClass('syuanpi shuttleIn show')
-    })
+    if (mobileTag && mobileMenu && headerLine && tagcloud) {
+      this.bind(mobileTag, 'click', 'mobile-tag', () => {
+        mobileMenu.classList.remove('show')
+        headerLine.classList.remove('show')
+        tagcloud.classList.add('syuanpi', 'shuttleIn', 'show')
+      })
+    }
 
-    $('#mobile-left').on('click', () => {
-      this.depth(
-        () => {
-          $mobileMenu.addClass('show')
-          $headerLine.addClass('show')
-        },
-        () => {
-          $mobileMenu.removeClass('show')
-          $headerLine.removeClass('show')
-        }
-      )
-    })
+    if (mobileLeft && mobileMenu && headerLine) {
+      this.bind(mobileLeft, 'click', 'mobile-left', () => {
+        this.depth(
+          () => {
+            mobileMenu.classList.add('show')
+            headerLine.classList.add('show')
+          },
+          () => {
+            mobileMenu.classList.remove('show')
+            headerLine.classList.remove('show')
+          }
+        )
+      })
+    }
   }
-
-
 
   bootstarp() {
     this.showToc()
@@ -394,7 +471,7 @@ class Base {
     if (!fns.length) return
 
     fromEvent(window, 'scroll')
-      .pipe(map(v => v.target.scrollingElement.scrollTop))
+      .pipe(map(() => Base.scrollTop()))
       .subscribe(scrollTop => fns.forEach(fn => fn(scrollTop)))
   }
 }

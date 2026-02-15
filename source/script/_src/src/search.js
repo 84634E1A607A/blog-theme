@@ -8,11 +8,21 @@ export default function(path, inputId) {
     responseType: 'xml'
   }).pipe(
     map(({ response }) => response),
-    map(res => res.querySelectorAll('entry')),
+    map(res => {
+      if (res && typeof res.querySelectorAll === 'function') {
+        return res.querySelectorAll('entry')
+      }
+
+      if (typeof res === 'string') {
+        return new DOMParser().parseFromString(res, 'text/xml').querySelectorAll('entry')
+      }
+
+      return []
+    }),
     map(res => [...res].map(v => ({
-      title: v.getElementsByTagName('title')[0].textContent,
-      url: v.getElementsByTagName('url')[0].textContent,
-      content: v.getElementsByTagName('content')[0].textContent,
+      title: v.getElementsByTagName('title')[0]?.textContent || '',
+      url: v.getElementsByTagName('url')[0]?.textContent || '',
+      content: v.getElementsByTagName('content')[0]?.textContent || '',
     })))
   )
 

@@ -6,27 +6,34 @@ export default class Banderole extends Base {
   pushHeader() {
     super.pushHeader()
 
-    const $header = $('#header')
+    const header = document.getElementById('header')
+    if (!header) return
+
     fromEvent(window, 'wheel').pipe(
       throttleTime(500),
       map(({ deltaY }) => deltaY > 0)
-    ).subscribe(v => $header.toggleClass('header-hide', v))
+    ).subscribe(v => header.classList.toggle('header-hide', v))
 
     this.scrollArr.push(sct => {
-      $header.toggleClass('header-scroll', sct > 50)
+      header.classList.toggle('header-scroll', sct > 50)
     })
   }
 
   back2top() {
-    const $backtop = $('#backtop')
-    this.scrollArr.push((sct) => {
-      if (sct > 110) {
-        $backtop.addClass('clarity').removeClass('melt')
-      } else {
-        $backtop.addClass('melt').removeClass('clarity')
-      }
-      this.updateRound(sct)
-    })
+    const backtop = document.getElementById('backtop')
+    if (backtop) {
+      this.scrollArr.push((sct) => {
+        if (sct > 110) {
+          backtop.classList.add('clarity')
+          backtop.classList.remove('melt')
+        } else {
+          backtop.classList.add('melt')
+          backtop.classList.remove('clarity')
+        }
+        this.updateRound(sct)
+      })
+    }
+
     super.back2top()
   }
 }
