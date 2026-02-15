@@ -3,20 +3,15 @@ import { fromEvent } from 'rxjs'
 import { throttleTime, map } from 'rxjs/operators'
 
 export default class Banderole extends Base {
-  constructor (config) {
-    super(config)
-  }
-
   pushHeader() {
     super.pushHeader()
-    if (this.theme.scheme !== 'banderole') return
-    
+
     const $header = $('#header')
     fromEvent(window, 'wheel').pipe(
       throttleTime(500),
       map(({ deltaY }) => deltaY > 0)
     ).subscribe(v => $header.toggleClass('header-hide', v))
-    
+
     this.scrollArr.push(sct => {
       $header.toggleClass('header-scroll', sct > 50)
     })
