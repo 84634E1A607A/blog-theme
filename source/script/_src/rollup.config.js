@@ -1,26 +1,25 @@
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import replace from 'rollup-plugin-replace'
-import { uglify } from 'rollup-plugin-uglify'
-import { minify } from 'uglify-es'
+const { babel } = require('@rollup/plugin-babel')
+const commonjs = require('@rollup/plugin-commonjs')
+const { nodeResolve } = require('@rollup/plugin-node-resolve')
+const terser = require('@rollup/plugin-terser')
 
-export default ['banderole'].map(name => ({
+module.exports = ['banderole'].map(name => ({
   input: `src/${name}.js`,
   plugins: [
     babel({
+      babelHelpers: 'bundled',
       exclude: 'node_modules/**'
     }),
-    resolve(),
+    nodeResolve(),
     commonjs(),
-    uglify({
+    terser({
       compress: {
         pure_getters: true
       },
       output: {
         comments: false
-      },
-    }, minify)
+      }
+    })
   ],
   output: [
     {
