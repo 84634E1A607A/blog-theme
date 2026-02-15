@@ -4,11 +4,6 @@
   <script src="{{ url_for('/') }}script/lib/lightbox/js/lightbox.min.js" async></script>
 {% endif %}
 
-{% if theme.mathjax %}
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.7/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"], ["\\(","\\)"]]}});</script>
-{% endif %}
-
 {% if theme.mathjax3 %}
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script>
@@ -25,11 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.1/lazysizes.min.js" async></script>
 {% endif %}
 
-{% if theme.scheme == 'banderole' %}
-  {{ js('script/scheme/banderole') }}
-{% else %}
-  {{ js('script/scheme/balance') }}
-{% endif %}
+{{ js('script/scheme/banderole') }}
 
 {{ js('script/bootstarp') }}
 

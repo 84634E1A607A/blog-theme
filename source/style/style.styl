@@ -25,9 +25,5 @@
 
 $scheme = hexo-config('scheme')
 
-if $scheme == 'banderole'
-  // banderole
-  @import './_partial/_schemes/_banderole/index.styl'
-else
-  // balance
-  @import './_partial/_schemes/_balance/index.styl'
+// The site uses banderole only; keep a single style entry path.
+@import './_partial/_schemes/_banderole/index.styl'
